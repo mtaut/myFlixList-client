@@ -12,6 +12,7 @@ myFlixList-client
    myFlixList-client/src/index.jsx
    myFlixList-client/src/index.scss
    myFlixList-client/src/index.html
+
 4. Create components folders
    main-view
    movie-card
@@ -22,7 +23,7 @@ myFlixList-client
    movie-card.jsx in "movie-card" directory  
    movie-view.jsx in "movie-view" directory
 
-6. Add hook
+6. Add hook to main-view.jsx
    useState
 
 7. Install parcel as a local developer dependency
