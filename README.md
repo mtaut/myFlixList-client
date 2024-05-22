@@ -7,6 +7,7 @@ myFlixList-client
 
 2. Install packages and dependencies
    npm install --save react react-dom
+
 3. Create files
    myFlixList-client/src/index.jsx
    myFlixList-client/src/index.scss
