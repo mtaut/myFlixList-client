@@ -27380,46 +27380,36 @@ var _movieView = require("../movie-view/movie-view");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
-    const [movies, setMovies] = (0, _react.useState)([
-        {
-            id: 1,
-            title: "Tetris",
-            image: "https://www.imdb.com/title/tt12758060/mediaviewer/rm1597778433/?ref_=ttmi_mi_all_2",
-            director: "Jon Baird",
-            genre: "Drama",
-            description: "Henk Rogers discovers Tetris in 1988 and then risks everything by travelling to the Soviet Union, where he joins forces with inventor Alexey Pajitnov to bring the game to the masses."
-        },
-        {
-            id: 2,
-            title: "Batman Begins",
-            image: "https://en.wikipedia.org/wiki/Batman_Begins#/media/File:Batman_Begins_Poster.jpg",
-            director: "Christopher Nolan",
-            genre: "Action",
-            description: "After witnessing his parents death, Bruce Wayne learns the art of fighting to confront injustice. When he returns to Gotham as Batman, he must stop a secret society that intends to destroy the city."
-        },
-        {
-            id: 3,
-            title: "The Departed",
-            image: "https://en.wikipedia.org/wiki/The_Departed#/media/File:Departed234.jpg",
-            director: "Martin Scorsese",
-            genre: "Drama",
-            description: "An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston."
-        }
-    ]);
+    const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
+    (0, _react.useEffect)(()=>{
+        fetch("https://myflixlist-7625107afe99.herokuapp.com/").then((response)=>response.json()).then((data)=>{
+            const moviesFromApi = data.docs.map((doc)=>{
+                return {
+                    id: movies.key,
+                    title: movies.title,
+                    description: movies.description,
+                    genre: movies.genre,
+                    director: movies.director,
+                    image: movies.image
+                };
+            });
+            setMovies(moviesFromApi);
+        });
+    }, []);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 43,
+        lineNumber: 31,
         columnNumber: 7
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 51,
+        lineNumber: 39,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27430,16 +27420,16 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 57,
+                lineNumber: 45,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 55,
+        lineNumber: 43,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "iPhnco0+Y6Jibrxg0q5lEo35H/A=");
+_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
