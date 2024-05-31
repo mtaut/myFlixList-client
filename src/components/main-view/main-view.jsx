@@ -11,10 +11,18 @@ export const MainView = () => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    fetch("https://myflixlist-7625107afe99.herokuapp.com/movies")
+    if (!token) {
+      return;
+    }
+
+    fetch("https://myflixlist-7625107afe99.herokuapp.com/movies", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.docs.map((doc) => {
+        console.log(data);
+
+        const moviesFromApi = data.map((doc) => {
           return {
             id: movies.key,
             title: movies.title,
@@ -27,7 +35,7 @@ export const MainView = () => {
 
         setMovies(moviesFromApi);
       });
-  }, []);
+  }, [token]);
 
   if (!user) {
     return (
@@ -62,6 +70,7 @@ export const MainView = () => {
       <button
         onClick={() => {
           setUser(null);
+          setToken(null);
         }}
       >
         Logout
