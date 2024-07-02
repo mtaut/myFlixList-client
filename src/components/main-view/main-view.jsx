@@ -3,6 +3,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import React from "react";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -26,18 +27,16 @@ export const MainView = () => {
       });
   }, [token]);
 
-  const moviesFromApi = data.map((doc) => {
+  const moviesFromApi = movies.map((movie) => {
     return {
-      id: movies.key,
-      title: movies.title,
-      description: movies.description,
-      genre: movies.genre,
-      director: movies.director,
-      image: movies.image,
+      id: movie.key,
+      title: movie.title,
+      description: movie.description,
+      genre: movie.genre,
+      director: movie.director,
+      image: movie.image,
     };
   });
-
-  setMovies(moviesFromApi);
 
   if (!user) {
     return (
