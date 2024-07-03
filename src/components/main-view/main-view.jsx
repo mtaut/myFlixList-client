@@ -42,7 +42,7 @@ export const MainView = () => {
   return (
     <Row className="justify-content-md-center">
       {!user ? (
-        <Col md={2}>
+        <Col>
           <LoginView
             onLoggedIn={(user, token) => {
               setUser(user);
@@ -65,7 +65,7 @@ export const MainView = () => {
       ) : (
         <>
           {movies.map((movie) => (
-            <Col className="mb-5" key={book.id} md={3}>
+            <Col className="mb-5" key={movie.id} md={3}>
               <MovieCard
                 key={movie.id}
                 movie={movie}
