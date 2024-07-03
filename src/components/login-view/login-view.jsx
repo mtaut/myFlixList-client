@@ -53,24 +53,31 @@ export const LoginView = ({ onLoggedIn }) => {
                 <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="formUsername">
                     <Form.Label>Username:</Form.Label>
-                    <input
+                    <Form.Control
                       type="text"
+                      size="sm"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       required
                       minLength="3"
+                      placeholder="Enter your username"
                     />
                   </Form.Group>
 
-                  <label>
-                    Password:
-                    <input
+                  <Form.Group controlId="formPassword">
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control
                       type="password"
+                      size="sm"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
                     />
-                  </label>
-                  <button type="submit">Submit</button>
+                  </Form.Group>
+                  <div style={{ marginBottom: "5px" }}></div>
+                  <Button variant="primary" type="submit" size="sm">
+                    Submit
+                  </Button>
                 </Form>
               </Card.Body>
             </Card>
