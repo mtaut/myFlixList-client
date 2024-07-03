@@ -14,14 +14,23 @@ export const LoginView = ({ onLoggedIn }) => {
 
     fetch("https://myflixlist-7625107afe99.herokuapp.com/login", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.ok) {
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Login failed");
+        }
+        return response.json();
+      })
+      .then((data) => {
         onLoggedIn(username);
-      } else {
-        alert("Login failed");
-      }
-    });
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   return (
