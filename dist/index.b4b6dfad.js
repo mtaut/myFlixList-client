@@ -27388,10 +27388,7 @@ var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
 var _loginView = require("../login-view/login-view");
 var _signupView = require("../signup-view/signup-view");
-var _row = require("react-bootstrap/Row");
-var _rowDefault = parcelHelpers.interopDefault(_row);
-var _col = require("react-bootstrap/Col");
-var _colDefault = parcelHelpers.interopDefault(_col);
+var _reactBootstrap = require("react-bootstrap");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
@@ -27423,7 +27420,7 @@ const MainView = ()=>{
             image: movie.image
         };
     });
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
         className: "justify-content-md-center",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27432,10 +27429,10 @@ const MainView = ()=>{
                 }
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 44,
+                lineNumber: 42,
                 columnNumber: 7
             }, undefined),
-            !user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+            !user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                 md: 8,
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginView.LoginView), {
@@ -27445,7 +27442,7 @@ const MainView = ()=>{
                         }
                     }, void 0, false, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 47,
+                        lineNumber: 45,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27454,20 +27451,20 @@ const MainView = ()=>{
                         }
                     }, void 0, false, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 53,
+                        lineNumber: 51,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupView.SignupView), {}, void 0, false, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 54,
+                        lineNumber: 52,
                         columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 46,
+                lineNumber: 44,
                 columnNumber: 9
-            }, undefined) : selectedMovie ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+            }, undefined) : selectedMovie ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                 md: 8,
                 style: {
                     border: "1px solid black"
@@ -27480,21 +27477,21 @@ const MainView = ()=>{
                     onBackClick: ()=>setSelectedMovie(null)
                 }, void 0, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 58,
+                    lineNumber: 56,
                     columnNumber: 11
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 57,
+                lineNumber: 55,
                 columnNumber: 9
             }, undefined) : movies.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: "The list is empty!"
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 65,
+                lineNumber: 63,
                 columnNumber: 9
             }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-                children: movies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
+                children: movies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                         className: "mb-5",
                         md: 3,
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
@@ -27504,19 +27501,19 @@ const MainView = ()=>{
                             }
                         }, movie.id, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 70,
+                            lineNumber: 68,
                             columnNumber: 15
                         }, undefined)
                     }, movie.id, false, {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 69,
+                        lineNumber: 67,
                         columnNumber: 13
                     }, undefined))
             }, void 0, false)
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 43,
+        lineNumber: 41,
         columnNumber: 5
     }, undefined);
 };
@@ -27530,7 +27527,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"12lf3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"bJEax","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","../login-view/login-view":"9YtA0","../signup-view/signup-view":"4OGiN","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6"}],"12lf3":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"12lf3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"bJEax","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","../login-view/login-view":"9YtA0","../signup-view/signup-view":"4OGiN","react-bootstrap":"3AD9A"}],"12lf3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
