@@ -8,13 +8,11 @@ export const LoginView = ({ onLoggedIn }) => {
     event.preventDefault();
 
     const data = {
-<<<<<<< HEAD
-<<<<<<< HEAD
       access: username,
       secret: password,
     };
 
-    fetch("https://myflixlist-7625107afe99.herokuapp.com/login.json", {
+    fetch("https://myflixlist-7625107afe99.herokuapp.com/login", {
       method: "POST",
       body: JSON.stringify(data),
     }).then((response) => {
@@ -24,38 +22,6 @@ export const LoginView = ({ onLoggedIn }) => {
         alert("Login failed");
       }
     });
-=======
-=======
->>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
-      Username: username,
-      Password: password,
-    };
-
-    fetch("https://myflixlist-7625107afe99.herokuapp.com/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Login response: ", data);
-        if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
-          localStorage.setItem("token", data.token);
-          onLoggedIn(data.user, data.token);
-        } else {
-          alert("No such user");
-        }
-      })
-      .catch((e) => {
-        alert("Something went wrong");
-      });
-<<<<<<< HEAD
->>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
-=======
->>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
   };
 
   return (
