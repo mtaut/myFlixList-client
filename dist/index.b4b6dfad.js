@@ -27394,6 +27394,7 @@ const MainView = ()=>{
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
 <<<<<<< HEAD
+<<<<<<< HEAD
         fetch("https://myflixlist-7625107afe99.herokuapp.com/movies").then((response)=>response.json()).then((data)=>{
             const moviesFromApi = data.docs.map((doc)=>{
                 return {
@@ -27407,6 +27408,8 @@ const MainView = ()=>{
             });
             setMovies(moviesFromApi);
 =======
+=======
+>>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
         if (!token) return;
         fetch("https://myflixlist-7625107afe99.herokuapp.com/movies", {
             headers: {
@@ -27414,6 +27417,9 @@ const MainView = ()=>{
             }
         }).then((response)=>response.json()).then((movies)=>{
             setMovies(movies);
+<<<<<<< HEAD
+>>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
+=======
 >>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
         });
     }, [

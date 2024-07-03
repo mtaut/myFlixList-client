@@ -9,6 +9,7 @@ export const LoginView = ({ onLoggedIn }) => {
 
     const data = {
 <<<<<<< HEAD
+<<<<<<< HEAD
       access: username,
       secret: password,
     };
@@ -24,6 +25,8 @@ export const LoginView = ({ onLoggedIn }) => {
       }
     });
 =======
+=======
+>>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
       Username: username,
       Password: password,
     };
@@ -49,6 +52,9 @@ export const LoginView = ({ onLoggedIn }) => {
       .catch((e) => {
         alert("Something went wrong");
       });
+<<<<<<< HEAD
+>>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
+=======
 >>>>>>> 982d996858439cc692f01cf0a222e1a04d2c78fe
   };
 
