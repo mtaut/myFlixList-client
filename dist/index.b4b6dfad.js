@@ -28644,10 +28644,12 @@ const SignupView = ()=>{
                                                 }, undefined),
                                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                                     type: "text",
+                                                    size: "sm",
                                                     value: username,
                                                     onChange: (e)=>setUsername(e.target.value),
                                                     required: true,
-                                                    minLength: "3"
+                                                    minLength: "3",
+                                                    placeholder: "Enter a username"
                                                 }, void 0, false, {
                                                     fileName: "src/components/signup-view/signup-view.jsx",
                                                     lineNumber: 55,
@@ -28666,23 +28668,26 @@ const SignupView = ()=>{
                                                     children: "Password:"
                                                 }, void 0, false, {
                                                     fileName: "src/components/signup-view/signup-view.jsx",
-                                                    lineNumber: 65,
+                                                    lineNumber: 67,
                                                     columnNumber: 21
                                                 }, undefined),
                                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                                     type: "password",
+                                                    size: "sm",
                                                     value: password,
                                                     onChange: (e)=>setPassword(e.target.value),
-                                                    required: true
+                                                    required: true,
+                                                    minLength: "8",
+                                                    placeholder: "Your password must be 8 or more characters"
                                                 }, void 0, false, {
                                                     fileName: "src/components/signup-view/signup-view.jsx",
-                                                    lineNumber: 66,
+                                                    lineNumber: 68,
                                                     columnNumber: 21
                                                 }, undefined)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/signup-view/signup-view.jsx",
-                                            lineNumber: 64,
+                                            lineNumber: 66,
                                             columnNumber: 19
                                         }, undefined),
                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -28692,23 +28697,25 @@ const SignupView = ()=>{
                                                     children: "Email:"
                                                 }, void 0, false, {
                                                     fileName: "src/components/signup-view/signup-view.jsx",
-                                                    lineNumber: 75,
+                                                    lineNumber: 80,
                                                     columnNumber: 21
                                                 }, undefined),
                                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                                     type: "email",
+                                                    size: "sm",
                                                     value: email,
                                                     onChange: (e)=>setEmail(e.target.value),
-                                                    required: true
+                                                    required: true,
+                                                    placeholder: "Enter your email address"
                                                 }, void 0, false, {
                                                     fileName: "src/components/signup-view/signup-view.jsx",
-                                                    lineNumber: 76,
+                                                    lineNumber: 81,
                                                     columnNumber: 21
                                                 }, undefined)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/signup-view/signup-view.jsx",
-                                            lineNumber: 74,
+                                            lineNumber: 79,
                                             columnNumber: 19
                                         }, undefined),
                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -28718,23 +28725,25 @@ const SignupView = ()=>{
                                                     children: "Birthday:"
                                                 }, void 0, false, {
                                                     fileName: "src/components/signup-view/signup-view.jsx",
-                                                    lineNumber: 85,
+                                                    lineNumber: 92,
                                                     columnNumber: 21
                                                 }, undefined),
                                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                                     type: "date",
+                                                    size: "sm",
                                                     value: birthday,
                                                     onChange: (e)=>setBirthday(e.target.value),
-                                                    required: true
+                                                    required: true,
+                                                    placeholder: "Enter your birthday"
                                                 }, void 0, false, {
                                                     fileName: "src/components/signup-view/signup-view.jsx",
-                                                    lineNumber: 86,
+                                                    lineNumber: 93,
                                                     columnNumber: 21
                                                 }, undefined)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/signup-view/signup-view.jsx",
-                                            lineNumber: 84,
+                                            lineNumber: 91,
                                             columnNumber: 19
                                         }, undefined),
                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
@@ -28743,7 +28752,7 @@ const SignupView = ()=>{
                                             children: "Submit"
                                         }, void 0, false, {
                                             fileName: "src/components/signup-view/signup-view.jsx",
-                                            lineNumber: 93,
+                                            lineNumber: 102,
                                             columnNumber: 19
                                         }, undefined)
                                     ]

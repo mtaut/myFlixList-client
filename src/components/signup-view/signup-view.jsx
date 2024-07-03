@@ -54,10 +54,12 @@ export const SignupView = () => {
                     <Form.Label>Username:</Form.Label>
                     <Form.Control
                       type="text"
+                      size="sm"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       required
                       minLength="3"
+                      placeholder="Enter a username"
                     />
                   </Form.Group>
 
@@ -65,9 +67,12 @@ export const SignupView = () => {
                     <Form.Label>Password:</Form.Label>
                     <Form.Control
                       type="password"
+                      size="sm"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
+                      minLength="8"
+                      placeholder="Your password must be 8 or more characters"
                     />
                   </Form.Group>
 
@@ -75,9 +80,11 @@ export const SignupView = () => {
                     <Form.Label>Email:</Form.Label>
                     <Form.Control
                       type="email"
+                      size="sm"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      placeholder="Enter your email address"
                     />
                   </Form.Group>
 
@@ -85,9 +92,11 @@ export const SignupView = () => {
                     <Form.Label>Birthday:</Form.Label>
                     <Form.Control
                       type="date"
+                      size="sm"
                       value={birthday}
                       onChange={(e) => setBirthday(e.target.value)}
                       required
+                      placeholder="Enter your birthday"
                     />
                   </Form.Group>
                   <Button variant="primary" type="submit">
