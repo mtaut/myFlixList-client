@@ -41,15 +41,16 @@ export const MainView = () => {
 
   return (
     <Row className="justify-content-md-center">
+      <div style={{ marginBottom: "8px" }}></div>
       {!user ? (
-        <Col>
+        <Col md={8}>
           <LoginView
             onLoggedIn={(user, token) => {
               setUser(user);
               setToken(token);
             }}
           />
-          or
+          <div style={{ marginBottom: "8px" }}></div>
           <SignupView />
         </Col>
       ) : selectedMovie ? (
