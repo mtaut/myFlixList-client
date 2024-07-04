@@ -44,8 +44,7 @@ export const MainView = () => {
         className="bg-body-tertiary navbar-light"
         style={{ width: "100%" }}
       >
-        <Navbar.Brand>Welcome to myFlixList</Navbar.Brand> // trying to get this
-        to fill accross the entire width of screen
+        <Navbar.Brand>Welcome to myFlixList</Navbar.Brand>
       </Navbar>
       <Row className="justify-content-md-center">
         <div style={{ marginBottom: "8px" }}></div>
