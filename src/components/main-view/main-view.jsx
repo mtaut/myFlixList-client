@@ -45,6 +45,7 @@ export const MainView = () => {
         style={{ width: "100%" }}
       >
         <Navbar.Brand>Welcome to myFlixList</Navbar.Brand>
+        {/*Trying to get navbar to take up entire width of screen*/}
       </Navbar>
       <Row className="justify-content-md-center">
         <div style={{ marginBottom: "8px" }}></div>
