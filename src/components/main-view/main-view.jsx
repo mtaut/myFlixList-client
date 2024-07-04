@@ -3,7 +3,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container, Navbar } from "react-bootstrap";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -38,44 +38,54 @@ export const MainView = () => {
     };
   });
   return (
-    <Row className="justify-content-md-center">
-      <div style={{ marginBottom: "8px" }}></div>
-      {!user ? (
-        <Col md={8}>
-          <LoginView
-            onLoggedIn={(user, token) => {
-              setUser(user);
-              setToken(token);
-            }}
-          />
-          <div style={{ marginBottom: "8px" }}></div>
-          <SignupView />
-        </Col>
-      ) : selectedMovie ? (
-        <Col md={8} style={{ border: "1px solid black" }}>
-          <MovieView
-            style={{ border: "1px solid grey" }}
-            movie={selectedMovie}
-            onBackClick={() => setSelectedMovie(null)}
-          />
-        </Col>
-      ) : movies.length === 0 ? (
-        <div>The list is empty!</div>
-      ) : (
-        <>
-          {movies.map((movie) => (
-            <Col className="mb-5" key={movie.id} md={3}>
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-                onMovieClick={(newSelectedMovie) => {
-                  setSelectedMovie(newSelectedMovie);
-                }}
-              />
-            </Col>
-          ))}
-        </>
-      )}
-    </Row>
+    <>
+      <Navbar
+        expand="lg"
+        className="bg-body-tertiary navbar-light"
+        style={{ width: "100%" }}
+      >
+        <Navbar.Brand>Welcome to myFlixList</Navbar.Brand> // trying to get this
+        to fill accross the entire width of screen
+      </Navbar>
+      <Row className="justify-content-md-center">
+        <div style={{ marginBottom: "8px" }}></div>
+        {!user ? (
+          <Col md={8}>
+            <LoginView
+              onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+              }}
+            />
+            <div style={{ marginBottom: "8px" }}></div>
+            <SignupView />
+          </Col>
+        ) : selectedMovie ? (
+          <Col md={8} style={{ border: "1px solid black" }}>
+            <MovieView
+              style={{ border: "1px solid grey" }}
+              movie={selectedMovie}
+              onBackClick={() => setSelectedMovie(null)}
+            />
+          </Col>
+        ) : movies.length === 0 ? (
+          <div>The list is empty!</div>
+        ) : (
+          <>
+            {movies.map((movie) => (
+              <Col className="mb-5" key={movie.id} md={3}>
+                <MovieCard
+                  key={movie.id}
+                  movie={movie}
+                  onMovieClick={(newSelectedMovie) => {
+                    setSelectedMovie(newSelectedMovie);
+                  }}
+                />
+              </Col>
+            ))}
+          </>
+        )}
+      </Row>
+    </>
   );
 };
