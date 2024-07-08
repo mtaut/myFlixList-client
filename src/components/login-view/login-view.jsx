@@ -26,27 +26,23 @@ export const LoginView = ({ onLoggedIn }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const url = `https://myflixlist-7625107afe99.herokuapp.com/login`;
+
     const data = {
       Username: username,
       Password: password,
     };
 
-    fetch("https://myflixlist-7625107afe99.herokuapp.com/users", {
+    fetch(url, {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(data),
     })
-      .then((response) => {
-        console.log("Response:", response);
-        if (!response.ok) {
-          throw new Error("Login failed");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log("Data:", data);
+        console.log("Login response: ", data);
         if (data.user) {
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
