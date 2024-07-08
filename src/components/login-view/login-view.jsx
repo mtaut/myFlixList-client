@@ -26,7 +26,7 @@ export const LoginView = ({ onLoggedIn }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const url = `https://myflixlist-7625107afe99.herokuapp.com/login`;
+    const url = "https://myflixlist-7625107afe99.herokuapp.com/login";
 
     const data = {
       Username: username,

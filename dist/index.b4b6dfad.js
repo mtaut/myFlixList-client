@@ -34231,7 +34231,7 @@ const LoginView = ({ onLoggedIn })=>{
     const [password, setPassword] = (0, _react.useState)("");
     const handleSubmit = (event)=>{
         event.preventDefault();
-        const url = `https://myflixlist-7625107afe99.herokuapp.com/login`;
+        const url = "https://myflixlist-7625107afe99.herokuapp.com/login";
         const data = {
             Username: username,
             Password: password
