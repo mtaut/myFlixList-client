@@ -17,27 +17,36 @@ export const LoginView = ({ onLoggedIn }) => {
     event.preventDefault();
 
     const data = {
-      access: username,
-      secret: password,
+      Username: username,
+      Password: password,
     };
 
-    fetch("https://myflixlist-7625107afe99.herokuapp.com/login", {
+    fetch("https://myflixlist-7625107afe99.herokuapp.com/", {
       method: "POST",
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
     })
       .then((response) => {
+        console.log("Response:", response);
         if (!response.ok) {
           throw new Error("Login failed");
         }
         return response.json();
       })
       .then((data) => {
-        onLoggedIn(username);
+        console.log("Data:", data);
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("token", data.token);
+          onLoggedIn(data.user, data.token);
+        } else {
+          alert("Login failed");
+        }
       })
       .catch((error) => {
+        console.error("Error:", error.message);
         alert(error.message);
       });
   };

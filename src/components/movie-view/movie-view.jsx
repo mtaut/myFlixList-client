@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -46,4 +47,10 @@ export const MovieView = ({ movie, onBackClick }) => {
       </Row>
     </Container>
   );
+};
+
+MovieView.PropTypes = {
+  user: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  onFavorite: PropTypes.func.isRequired,
 };
