@@ -1,4 +1,13 @@
 import { useState } from "react";
+import {
+  Button,
+  Form,
+  Card,
+  CardGroup,
+  Container,
+  Col,
+  Row,
+} from "react-bootstrap";
 
 import {
   Button,
@@ -22,7 +31,7 @@ export const LoginView = ({ onLoggedIn }) => {
       Password: password,
     };
 
-    fetch("https://myflixlist-7625107afe99.herokuapp.com/login", {
+    fetch("https://myflixlist-7625107afe99.herokuapp.com/", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
