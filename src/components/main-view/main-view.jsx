@@ -4,10 +4,6 @@ import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { Row, Col, Navbar } from "react-bootstrap";
-<<<<<<< HEAD
-import React from "react";
-=======
->>>>>>> 71d254af7759cb6c18d03c5cae2e828be5b6f11f
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -48,7 +44,7 @@ export const MainView = () => {
         className="bg-body-tertiary navbar-light"
         style={{ width: "100%" }}
       >
-        <Navbar.Brand>Welcome to myFlixList</Navbar.Brand>        
+        <Navbar.Brand>Welcome to myFlixList</Navbar.Brand>
       </Navbar>
       <Row className="justify-content-md-center">
         <div style={{ marginBottom: "8px" }}></div>
