@@ -45,6 +45,13 @@ export const MainView = () => {
         style={{ width: "100%" }}
       >
         <Navbar.Brand>Welcome to myFlixList</Navbar.Brand>
+        <button
+          onClick={() => {
+            setUser(null);
+          }}
+        >
+          Logout
+        </button>
       </Navbar>
       <Row className="justify-content-md-center">
         <div style={{ marginBottom: "8px" }}></div>
