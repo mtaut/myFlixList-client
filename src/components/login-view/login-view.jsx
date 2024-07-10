@@ -45,9 +45,6 @@ export const LoginView = ({ onLoggedIn }) => {
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
           onLoggedIn(data.user, data.token);
-          console.log(
-            "Login successful. User: ${user.Username}, Token ${token}"
-          );
         } else {
           alert("Login failed");
         }
