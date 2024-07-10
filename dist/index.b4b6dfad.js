@@ -34231,11 +34231,12 @@ const LoginView = ({ onLoggedIn })=>{
     const [password, setPassword] = (0, _react.useState)("");
     const handleSubmit = (event)=>{
         event.preventDefault(); // This will prevent page from automatically reloading
+        const url = `https://myflixlist-7625107afe99.herokuapp.com/login?Username=${encodeURIComponent(username)}&Password=${encodeURIComponent(password)}`;
         const data = {
             Username: username,
             Password: password
         };
-        fetch("https://myflixlist-7625107afe99.herokuapp.com/login", {
+        fetch(url, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -34264,7 +34265,7 @@ const LoginView = ({ onLoggedIn })=>{
                                     children: "Login"
                                 }, void 0, false, {
                                     fileName: "src/components/login-view/login-view.jsx",
-                                    lineNumber: 65,
+                                    lineNumber: 69,
                                     columnNumber: 17
                                 }, undefined),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form), {
@@ -34277,7 +34278,7 @@ const LoginView = ({ onLoggedIn })=>{
                                                     children: "Username:"
                                                 }, void 0, false, {
                                                     fileName: "src/components/login-view/login-view.jsx",
-                                                    lineNumber: 68,
+                                                    lineNumber: 72,
                                                     columnNumber: 21
                                                 }, undefined),
                                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -34290,13 +34291,13 @@ const LoginView = ({ onLoggedIn })=>{
                                                     placeholder: "Enter your username"
                                                 }, void 0, false, {
                                                     fileName: "src/components/login-view/login-view.jsx",
-                                                    lineNumber: 69,
+                                                    lineNumber: 73,
                                                     columnNumber: 21
                                                 }, undefined)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/login-view/login-view.jsx",
-                                            lineNumber: 67,
+                                            lineNumber: 71,
                                             columnNumber: 19
                                         }, undefined),
                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -34306,7 +34307,7 @@ const LoginView = ({ onLoggedIn })=>{
                                                     children: "Password:"
                                                 }, void 0, false, {
                                                     fileName: "src/components/login-view/login-view.jsx",
-                                                    lineNumber: 81,
+                                                    lineNumber: 85,
                                                     columnNumber: 21
                                                 }, undefined),
                                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -34317,13 +34318,13 @@ const LoginView = ({ onLoggedIn })=>{
                                                     placeholder: "Enter your password"
                                                 }, void 0, false, {
                                                     fileName: "src/components/login-view/login-view.jsx",
-                                                    lineNumber: 82,
+                                                    lineNumber: 86,
                                                     columnNumber: 21
                                                 }, undefined)
                                             ]
                                         }, void 0, true, {
                                             fileName: "src/components/login-view/login-view.jsx",
-                                            lineNumber: 80,
+                                            lineNumber: 84,
                                             columnNumber: 19
                                         }, undefined),
                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -34332,7 +34333,7 @@ const LoginView = ({ onLoggedIn })=>{
                                             }
                                         }, void 0, false, {
                                             fileName: "src/components/login-view/login-view.jsx",
-                                            lineNumber: 90,
+                                            lineNumber: 94,
                                             columnNumber: 19
                                         }, undefined),
                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
@@ -34342,44 +34343,44 @@ const LoginView = ({ onLoggedIn })=>{
                                             children: "Submit"
                                         }, void 0, false, {
                                             fileName: "src/components/login-view/login-view.jsx",
-                                            lineNumber: 91,
+                                            lineNumber: 95,
                                             columnNumber: 19
                                         }, undefined)
                                     ]
                                 }, void 0, true, {
                                     fileName: "src/components/login-view/login-view.jsx",
-                                    lineNumber: 66,
+                                    lineNumber: 70,
                                     columnNumber: 17
                                 }, undefined)
                             ]
                         }, void 0, true, {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 64,
+                            lineNumber: 68,
                             columnNumber: 15
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 63,
+                        lineNumber: 67,
                         columnNumber: 13
                     }, undefined)
                 }, void 0, false, {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 62,
+                    lineNumber: 66,
                     columnNumber: 11
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 61,
+                lineNumber: 65,
                 columnNumber: 9
             }, undefined)
         }, void 0, false, {
             fileName: "src/components/login-view/login-view.jsx",
-            lineNumber: 60,
+            lineNumber: 64,
             columnNumber: 7
         }, undefined)
     }, void 0, false, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 59,
+        lineNumber: 63,
         columnNumber: 5
     }, undefined);
 };

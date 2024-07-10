@@ -26,12 +26,16 @@ export const LoginView = ({ onLoggedIn }) => {
   const handleSubmit = (event) => {
     event.preventDefault(); // This will prevent page from automatically reloading
 
+    const url = `https://myflixlist-7625107afe99.herokuapp.com/login?Username=${encodeURIComponent(
+      username
+    )}&Password=${encodeURIComponent(password)}`;
+
     const data = {
       Username: username,
       Password: password,
     };
 
-    fetch("https://myflixlist-7625107afe99.herokuapp.com/login", {
+    fetch(url, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
