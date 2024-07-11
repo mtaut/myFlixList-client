@@ -1,8 +1,14 @@
-import PropTypes from "prop-types";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./movie-view.scss";
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
+
+  const movie = movies.find((m) => m.id === movieId);
+
   return (
     <Container>
       <Row className="justify-content-center">
@@ -38,18 +44,13 @@ export const MovieView = ({ movie, onBackClick }) => {
           </Row>
           <Row className="justify-content-center">
             <Col xs="auto">
-              <Button onClick={onBackClick} variant="primary">
-                Back
-              </Button>
+              <Link to={"/"}>
+                <Button className="back-button">Back</Button>
+              </Link>
             </Col>
           </Row>
         </Col>
       </Row>
     </Container>
   );
-};
-MovieView.PropTypes = {
-  user: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
-  onFavorite: PropTypes.func.isRequired,
 };
