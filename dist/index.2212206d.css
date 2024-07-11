@@ -1,7 +1,3 @@
-.my-flix {
-  color: #4682b4;
-}
-
 *, :before, :after {
   box-sizing: border-box;
 }
@@ -3243,9 +3239,9 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 }
 
 .link-primary:hover, .link-primary:focus {
-  color: RGBA(10, 88, 202, var(--bs-link-opacity, 1)) !important;
-  -webkit-text-decoration-color: RGBA(10, 88, 202, var(--bs-link-underline-opacity, 1)) !important;
-  text-decoration-color: RGBA(10, 88, 202, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(247, 229, 194, var(--bs-link-opacity, 1)) !important;
+  -webkit-text-decoration-color: RGBA(247, 229, 194, var(--bs-link-underline-opacity, 1)) !important;
+  text-decoration-color: RGBA(247, 229, 194, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-secondary {
