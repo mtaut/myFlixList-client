@@ -1,7 +1,6 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./movie-view.scss";
 
 export const MovieView = ({ movies }) => {
