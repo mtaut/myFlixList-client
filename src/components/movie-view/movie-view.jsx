@@ -6,20 +6,14 @@ import "./movie-view.scss";
 export const MovieView = ({ movies }) => {
   const { movieId } = useParams();
 
-  const movie = movies.find((m) => m._id === movieId);
+  const movie = movies.find((movie) => movie._id === movieId);
 
   return (
     <Container>
       <Row className="justify-content-center">
         <Col md={8}>
           <Row className="mb-3">
-            <Col xs={12} className="text-center">
-              <img
-                src={movie.imagePath}
-                alt={movie.Title}
-                className="img-fluid"
-              />
-            </Col>
+            <Col xs={12} className="text-center"></Col>
           </Row>
           <Row className="mb-3">
             <Col xs={4} className="font-weight-bold">
