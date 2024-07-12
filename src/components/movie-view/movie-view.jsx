@@ -14,32 +14,36 @@ export const MovieView = ({ movies }) => {
         <Col md={8}>
           <Row className="mb-3">
             <Col xs={12} className="text-center">
-              <img src={movie.image} alt={movie.title} className="img-fluid" />
+              <img
+                src={movie.imagePath}
+                alt={movie.Title}
+                className="img-fluid"
+              />
             </Col>
           </Row>
           <Row className="mb-3">
             <Col xs={4} className="font-weight-bold">
               Title:
             </Col>
-            <Col xs={8}>{movie.title}</Col>
+            <Col xs={8}>{movie.Title}</Col>
           </Row>
           <Row className="mb-3">
             <Col xs={4} className="font-weight-bold">
               Director:
             </Col>
-            <Col xs={8}>{movie.director}</Col>
+            <Col xs={8}>{movie.Director.Name}</Col>
           </Row>
           <Row className="mb-3">
             <Col xs={4} className="font-weight-bold">
               Genre:
             </Col>
-            <Col xs={8}>{movie.genre}</Col>
+            <Col xs={8}>{movie.Genre.Name}</Col>
           </Row>
           <Row className="mb-3">
             <Col xs={4} className="font-weight-bold">
               Description:
             </Col>
-            <Col xs={8}>{movie.description}</Col>
+            <Col xs={8}>{movie.Description}</Col>
           </Row>
           <Row className="justify-content-center">
             <Col xs="auto">

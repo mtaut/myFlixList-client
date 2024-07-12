@@ -41,7 +41,7 @@ export const MainView = () => {
       <Row className="justify-content-md-center">
         <Routes>
           <Route
-            path="./signup"
+            path="/users"
             element={
               <>
                 {user ? (
@@ -100,8 +100,8 @@ export const MainView = () => {
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard movie={movie} updateAction={setUser} />
+                      <Col className="mb-4" key={movie._id} md={3}>
+                        <MovieCard movie={movie} />
                       </Col>
                     ))}
                     <Col md={12}>
@@ -116,6 +116,7 @@ export const MainView = () => {
                       >
                         Logout
                       </button>
+                      <div style={{ marginBottom: "8px" }}></div>
                     </Col>
                   </>
                 )}
