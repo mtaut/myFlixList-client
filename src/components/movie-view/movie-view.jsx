@@ -14,7 +14,7 @@ export const MovieView = ({ movies }) => {
         <Col md={8}>
           <Row className="mb-3">
             <Col xs={12} className="text-center">
-              <img src={movie.image} alt={movie.title} className="img-Fluid" />
+              <img src={movie.image} alt={movie.title} className="img-fluid" />
             </Col>
           </Row>
           <Row className="mb-3">

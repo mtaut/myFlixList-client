@@ -1,13 +1,13 @@
-.back-button {
-  color: #00f;
+.logout-button {
+  color: #b22222;
 }
 
-.back-button a {
+.logout-button a {
   padding: 4px 12px;
 }
 
-.back-button {
-  background-color: #1e90ff;
+.logout-button {
+  background-color: #d8bfd8;
   border: none;
   border-radius: 4px;
 }

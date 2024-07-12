@@ -80,7 +80,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
+                  <Col>One moment please...</Col>
                 ) : (
                   <Col md={8}>
                     <MovieView movies={movies} />
@@ -111,7 +111,7 @@ export const MainView = () => {
                           setToken(null);
                           localStorage.clear();
                         }}
-                        className="back-button"
+                        className="logout-button"
                         style={{ cursor: "pointer" }}
                       >
                         Logout
