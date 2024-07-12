@@ -24,7 +24,7 @@ export const MainView = () => {
     })
       .then((response) => response.json())
       .then((movies) => {
-        setMovies(moviesFromApi);
+        setMovies(movies);
       });
   }, [token]);
 
