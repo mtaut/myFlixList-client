@@ -10,7 +10,6 @@ export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
 
@@ -30,23 +29,6 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      <Navbar
-        expand="lg"
-        className="bg-body-tertiary navbar-light"
-        style={{ width: "100%" }}
-      >
-        <Navbar.Brand>Welcome to myFlixList</Navbar.Brand>
-        <Button
-          type="button"
-          class="btn btn-primary btn-sm ml-auto"
-          size="sm"
-          onClick={() => {
-            setUser(null);
-          }}
-        >
-          Logout
-        </Button>
-      </Navbar>
       <Row className="justify-content-md-center">
         <Routes>
           <Route
