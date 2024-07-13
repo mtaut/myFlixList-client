@@ -1,12 +1,34 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { PropTypes } from "prop-types";
 import "./movie-view.scss";
 
 export const MovieView = ({ movies }) => {
   const { movieId } = useParams();
+  const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const movie = movies.find((movie) => movie._id === movieId);
+  useEffect(() => {
+    const selectedMovie = movies.find((movie) => movie._id === movieId);
+    if (selectedMovie) {
+      setMovie(selectedMovie);
+      setLoading(false);
+    }
+  }, [movieId]);
+
+  if (loading) {
+    return (
+      <Container>
+        <Row className="justify-content-center">
+          <Col md={8} className="text-center">
+            Loading...
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 
   return (
     <Container>
@@ -50,4 +72,21 @@ export const MovieView = ({ movies }) => {
       </Row>
     </Container>
   );
+};
+
+MovieView.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      Title: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired,
+      Genre: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+      }).isRequired,
+      Director: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+      }).isRequired,
+      imagePath: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
