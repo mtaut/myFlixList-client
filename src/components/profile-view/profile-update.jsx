@@ -1,19 +1,20 @@
 import React from "react";
-import { Form } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 
-function UpdateUser({ handleSubmit, handleUpdate }) {
+function UpdateUser({ user, handleChange, handleSubmit }) {
   return (
     <>
-      <h4>Update</h4>
+      <h4>Update Your Profile</h4>
       <Form>
         <Form.Group controlId="formUsername">
           <Form.Label>Username:</Form.Label>
           <Form.Control
             type="text"
-            defaultValue={user.Username}
-            onChange={(e) => handleUpdate(e)}
+            name="Username"
+            value={user.Username}
+            onChange={handleChange}
             required
-            placeholder="Enter a username"
+            placeholder="Enter a new username"
           />
         </Form.Group>
 
@@ -21,11 +22,12 @@ function UpdateUser({ handleSubmit, handleUpdate }) {
           <Form.Label>Password:</Form.Label>
           <Form.Control
             type="password"
-            defaultValue=""
-            onChange={(e) => handleUpdate(e)}
+            name="Password"
+            value={user.Password || ""}
+            onChange={handleChange}
             required
             minLength="8"
-            placeholder="Your password must be 8 pr more characters"
+            placeholder="Your password must be 8 or more characters"
           />
         </Form.Group>
 
@@ -33,8 +35,9 @@ function UpdateUser({ handleSubmit, handleUpdate }) {
           <Form.Label>Email address:</Form.Label>
           <Form.Control
             type="email"
-            defaultValue={user.Email}
-            onChange={(e) => handleUpdate(e.target.value)}
+            name="Email"
+            value={user.Email}
+            onChange={handleChange}
             required
             placeholder="Enter your email address"
           />
@@ -43,8 +46,9 @@ function UpdateUser({ handleSubmit, handleUpdate }) {
           <Form.Label>Birthday</Form.Label>
           <Form.Control
             type="date"
-            defaultValue={user.Birthday}
-            onChange={(e) => handleUpdate(e.target.value)}
+            name="Birthday"
+            value={user.Birthday}
+            onChange={handleChange}
             required
           />
         </Form.Group>
