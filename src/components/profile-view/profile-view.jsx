@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Container, Button, Form, Row, Col, Card } from "react-bootstrap";
+import {
+  Container,
+  Button,
+  Form,
+  Row,
+  Col,
+  Card,
+  CardBody,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import UserInfo from "./user-info";
 import FavoriteMovies from "./favorite-movies";
 import UpdateUser from "./profile-update";
 import "./profile-view.scss";
 
-export const ProfileView = ({ movies, onUpdatedUserInfo }) => {
+const ProfileView = ({ movies, onUpdatedUserInfo }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,6 +28,7 @@ export const ProfileView = ({ movies, onUpdatedUserInfo }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        const username = "/users/user";
         const response = await axios.get(
           `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`
         );
@@ -51,9 +60,10 @@ export const ProfileView = ({ movies, onUpdatedUserInfo }) => {
   const handleDeregister = async () => {
     try {
       await axios.delete(
-        `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`
+        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.id}`
       );
-      // add logic to log out the user and redirect after degregistration
+      onDeregister();
+      Navigate("/login");
     } catch (err) {
       setError(err);
     }
@@ -69,8 +79,8 @@ export const ProfileView = ({ movies, onUpdatedUserInfo }) => {
 
   const handleFavorite = async () => {
     try {
-      const updateFavorites = [...favoriteMovies, movieTitle];
-      setFavoriteMovies(updateFavorites);
+      const updatedFavorites = [...favoriteMovies, movieTitle];
+      setFavoriteMovies(updatedFavorites);
       await axios.put(
         `https://myflixlist-7625107afe99.herokuapp.com/users/${user.id}`,
         { ...user, favoriteMovies: updatedFavorites }
@@ -98,6 +108,19 @@ export const ProfileView = ({ movies, onUpdatedUserInfo }) => {
           <Card>
             <Card.Body>
               <UpdateUser user={user} setUser={setUser} />
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col xs={12} sm={4}>
+          <Card>
+            <Card.Body>
+              <Button
+                type="button"
+                class="btn btn-warning"
+                onClick={handleDeregister}
+              >
+                Deregister
+              </Button>
             </Card.Body>
           </Card>
         </Col>
