@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 import "./movie-view.scss";
 
 export const MovieView = ({ movies }) => {
@@ -16,7 +16,7 @@ export const MovieView = ({ movies }) => {
       setMovie(selectedMovie);
       setLoading(false);
     }
-  }, [movieId]);
+  }, [movieId, movies]);
 
   if (loading) {
     return (

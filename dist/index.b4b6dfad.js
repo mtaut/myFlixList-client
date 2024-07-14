@@ -27510,6 +27510,7 @@ const MovieCard = ({ movie })=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Img, {
+                className: "h-100",
                 variant: "top",
                 src: movie.imagePath
             }, void 0, false, {
@@ -41974,6 +41975,7 @@ var _reactRouter = require("react-router");
 var _reactRouterDom = require("react-router-dom");
 var _reactBootstrap = require("react-bootstrap");
 var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _movieViewScss = require("./movie-view.scss");
 var _s = $RefreshSig$();
 const MovieView = ({ movies })=>{
@@ -41988,7 +41990,8 @@ const MovieView = ({ movies })=>{
             setLoading(false);
         }
     }, [
-        movieId
+        movieId,
+        movies
     ]);
     if (loading) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Container), {
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
@@ -42190,17 +42193,17 @@ _s(MovieView, "q8COZhhHynTaK+mRfQyf953m7lM=", false, function() {
 });
 _c = MovieView;
 MovieView.propTypes = {
-    movies: (0, _propTypes.PropTypes).arrayOf((0, _propTypes.PropTypes).shape({
-        _id: (0, _propTypes.PropTypes).string.isRequired,
-        Title: (0, _propTypes.PropTypes).string.isRequired,
-        Description: (0, _propTypes.PropTypes).string.isRequired,
-        Genre: (0, _propTypes.PropTypes).shape({
-            Name: (0, _propTypes.PropTypes).string.isRequired
+    movies: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).shape({
+        _id: (0, _propTypesDefault.default).string.isRequired,
+        Title: (0, _propTypesDefault.default).string.isRequired,
+        Description: (0, _propTypesDefault.default).string.isRequired,
+        Genre: (0, _propTypesDefault.default).shape({
+            Name: (0, _propTypesDefault.default).string.isRequired
         }).isRequired,
-        Director: (0, _propTypes.PropTypes).shape({
-            Name: (0, _propTypes.PropTypes).string.isRequired
+        Director: (0, _propTypesDefault.default).shape({
+            Name: (0, _propTypesDefault.default).string.isRequired
         }).isRequired,
-        imagePath: (0, _propTypes.PropTypes).string.isRequired
+        imagePath: (0, _propTypesDefault.default).string.isRequired
     })).isRequired
 };
 var _c;
