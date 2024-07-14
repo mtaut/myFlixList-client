@@ -2,7 +2,6 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
-  const token = localStorage.getItem("token");
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -27,7 +26,14 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <Nav.Link as={Link} to="/">
                   Home
                 </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                <Nav.Link as={Link} to={`/users/${user.Username}`}>
+                  Profile
+                </Nav.Link>
+                <Nav.Link onClick={onLoggedOut}>
+                  <Button type="button" class="btn btn-danger">
+                    Logout
+                  </Button>
+                </Nav.Link>
               </>
             )}
           </Nav>
