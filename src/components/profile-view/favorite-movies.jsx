@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Col, Row, Figure, Button } from "react-bootstrap";
+import { Col, Row, Figure, Button, Card } from "react-bootstrap";
+import axios from "axios";
 import "./profile-view.scss";
 
-function FavoriteMovies({ favoriteMovieList }) {
-  const removeFav = (id) => {
+function FavoriteMovies({ favoriteMovies }) {
+  const removeFav = async (id) => {
     let token = localStorage.getItem("token");
-    let url = `https://myflixlist-7625107afe99.herokuapp.com/users/${localStorage.getItem(
-      "user"
-    )}/movies/${id}`;
-    axios.delete(url, {
+    const username = localStorage.getItem("user");
+    let url = `https://myflixlist-7625107afe99.herokuapp.com/users/${username}/movies/${id}`;
+    await axios.delete(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
   };
@@ -23,21 +23,19 @@ function FavoriteMovies({ favoriteMovieList }) {
           </Col>
         </Row>
         <Row>
-          {favoriteMovieList.map((ImagePath, Title, _id) => {
-            return (
-              <Col xs={12} md={6} lg={3} key={_id} className="fav-movie">
-                <Figure>
-                  <Link to={`/movies/${movies._id}`}>
-                    <Figure.Image src={ImagePath} alt={Title} />
-                    <Figure.Caption>{Title}</Figure.Caption>
-                  </Link>
-                </Figure>
-                <Button variant="secondary" onClick={() => removeFav(_id)}>
-                  Remove
-                </Button>
-              </Col>
-            );
-          })}
+          {favoriteMovies.map((movie) => (
+            <Col xs={12} md={6} lg={3} key={movie._id} className="fav-movie">
+              <Figure>
+                <Link to={`/movies/${movies._id}`}>
+                  <Figure.Image src={movie.ImagePath} alt={movie.Title} />
+                  <Figure.Caption>{movie.Title}</Figure.Caption>
+                </Link>
+              </Figure>
+              <Button variant="secondary" onClick={() => removeFav(movie._id)}>
+                Remove
+              </Button>
+            </Col>
+          ))}
         </Row>
       </Card.Body>
     </Card>
