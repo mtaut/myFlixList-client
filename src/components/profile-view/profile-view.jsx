@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import PropTypes from "prop-types";
 import { Container, Button, Row, Col, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserInfo from "./user-info";
 import FavoriteMovies from "./favorite-movies";
 import UpdateUser from "./profile-update";
 import "./profile-view.scss";
 
-const ProfileView = ({ movies, onUpdatedUserInfo }) => {
+const ProfileView = ({ movies, onUpdatedUserInfo, onDeregister }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,19 +15,17 @@ const ProfileView = ({ movies, onUpdatedUserInfo }) => {
   const [updateSuccess, setUpdateSuccess] = useState(null);
   const [movieTitle, setMovieTitle] = useState("");
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const username = "/users/user";
+        const username = localStorage.getItem("user");
         const response = await axios.get(
           `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`
         );
-        const userData = response.data.find(
-          (user) => user.username === username
-        );
-        setUser(userData);
-        setFavoriteMovies(userData.favoriteMovies || []);
+        setUser(response.data);
+        setFavoriteMovies(response.data.favoriteMovies || []);
       } catch (err) {
         setError(err);
       } finally {
@@ -37,13 +34,21 @@ const ProfileView = ({ movies, onUpdatedUserInfo }) => {
     };
 
     fetchUserData();
-  }, [username, token]);
+  }, []);
 
   const handleUpdate = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.put(`/users/${user.id}`, user);
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
+        user,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setUpdateSuccess(true);
+      onUpdatedUserInfo(response.data);
     } catch (err) {
       setUpdateError(err);
     }
@@ -51,11 +56,15 @@ const ProfileView = ({ movies, onUpdatedUserInfo }) => {
 
   const handleDeregister = async () => {
     try {
+      const token = localStorage.getItem("token");
       await axios.delete(
-        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.id}`
+        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       onDeregister();
-      Navigate("/login");
+      navigate("/login");
     } catch (err) {
       setError(err);
     }
@@ -69,22 +78,8 @@ const ProfileView = ({ movies, onUpdatedUserInfo }) => {
     });
   };
 
-  const handleFavorite = async () => {
-    try {
-      const updatedFavorites = [...favoriteMovies, movieTitle];
-      setFavoriteMovies(updatedFavorites);
-      await axios.put(
-        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.id}`,
-        { ...user, favoriteMovies: updatedFavorites }
-      );
-      setMovieTitle("");
-    } catch (err) {
-      setError(err);
-    }
-  };
-
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading user date</div>;
+  if (error) return <div>Error loading user data</div>;
 
   return (
     <Container>
@@ -99,7 +94,11 @@ const ProfileView = ({ movies, onUpdatedUserInfo }) => {
         <Col xs={12} sm={8}>
           <Card>
             <Card.Body>
-              <UpdateUser user={user} setUser={setUser} />
+              <UpdateUser
+                user={user}
+                handleChange={handleChange}
+                handleSubmit={handleUpdate}
+              />
             </Card.Body>
           </Card>
         </Col>
@@ -117,7 +116,9 @@ const ProfileView = ({ movies, onUpdatedUserInfo }) => {
           </Card>
         </Col>
       </Row>
-      <FavoriteMovies favoriteMovieList={favoriteMovieList} />
+      <FavoriteMovies favoriteMovie={favoriteMovies} />
     </Container>
   );
 };
+
+export default ProfileView;
