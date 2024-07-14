@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import {
-  Container,
-  Button,
-  Form,
-  Row,
-  Col,
-  Card,
-  CardBody,
-} from "react-bootstrap";
+import { Container, Button, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import UserInfo from "./user-info";
 import FavoriteMovies from "./favorite-movies";
