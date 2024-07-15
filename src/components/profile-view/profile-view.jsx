@@ -8,11 +8,12 @@ import { ProfileUpdate } from "./profile-update";
 import "./profile-view.scss";
 
 export const ProfileView = ({
-  username,
+  user,
   token,
   movies,
   onUpdatedUserInfo,
   onDeregister,
+  handleUpdateFavorites,
 }) => {
   const [username, setUsername] = useState(user.Username);
   const [loading, setLoading] = useState(true);
@@ -107,7 +108,7 @@ export const ProfileView = ({
         favoriteMovie={favoriteMovies}
         user={user}
         token={token}
-        onUpdateFavorites={movieId}
+        onUpdateFavorites={handleUpdateFavorites}
       />
     </Container>
   );
