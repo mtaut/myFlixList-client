@@ -1,22 +1,33 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "./movie-view.scss";
+import axios from "axios";
 
-export const MovieView = ({ movies }) => {
+export const MovieView = ({ movies, user, token, onUpdateFavorites }) => {
   const { movieId } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const movie = movies.find((m) => m._id === movieId);
 
   useEffect(() => {
-    const selectedMovie = movies.find((movie) => movie._id === movieId);
-    if (selectedMovie) {
-      setMovie(selectedMovie);
-      setLoading(false);
+    if (user.FavoriteMovies.includes(movieId)) {
+      setIsfavorite(true);
     }
-  }, [movieId, movies]);
+  }, [movieId, user.Favorite.Movies]);
+
+  const handleAddToFavorites = async () => {
+    try {
+      await axios.post(
+        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      onUpdateFavorites(movieId);
+    } catch (error) {
+      console.error("Error adding favorite:", error);
+    }
+  };
 
   if (loading) {
     return (
