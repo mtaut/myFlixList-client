@@ -4,14 +4,24 @@ import { Col, Row, Figure, Button, Card } from "react-bootstrap";
 import axios from "axios";
 import "./profile-view.scss";
 
-function FavoriteMovies({ favoriteMovies }) {
-  const removeFav = async (id) => {
-    let token = localStorage.getItem("token");
-    const username = localStorage.getItem("user");
-    let url = `https://myflixlist-7625107afe99.herokuapp.com/users/${username}/movies/${id}`;
-    await axios.delete(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+export const FavoriteMovies = ({
+  favoriteMovies,
+  user,
+  token,
+  onUpdateFavorites,
+}) => {
+  const handleRemoveFav = async (movieId) => {
+    try {
+      await axios.delete(
+        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      onUpdateFavorites(movieId);
+    } catch (error) {
+      console.error("Error removing favorite:", error);
+    }
   };
 
   return (
@@ -26,12 +36,15 @@ function FavoriteMovies({ favoriteMovies }) {
           {favoriteMovies.map((movie) => (
             <Col xs={12} md={6} lg={3} key={movie._id} className="fav-movie">
               <Figure>
-                <Link to={`/movies/${movies._id}`}>
+                <Link to={`/movies/${movie._id}`}>
                   <Figure.Image src={movie.ImagePath} alt={movie.Title} />
                   <Figure.Caption>{movie.Title}</Figure.Caption>
                 </Link>
               </Figure>
-              <Button variant="secondary" onClick={() => removeFav(movie._id)}>
+              <Button
+                variant="secondary"
+                onClick={() => handleRemoveFav(movie._id)}
+              >
                 Remove
               </Button>
             </Col>
@@ -40,6 +53,6 @@ function FavoriteMovies({ favoriteMovies }) {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default FavoriteMovies;
