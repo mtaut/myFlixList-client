@@ -2,18 +2,23 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container, Button, Row, Col, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserInfo from "./user-info";
-import FavoriteMovies from "./favorite-movies";
-import UpdateUser from "./profile-update";
+import { UserInfo } from "./user-info";
+import { FavoriteMovies } from "./favorite-movies";
+import { ProfileUpdate } from "./profile-update";
 import "./profile-view.scss";
 
-const ProfileView = ({ movies, onUpdatedUserInfo, onDeregister }) => {
+export const ProfileView = ({
+  movies,
+  onUpdatedUserInfo,
+  onDeregister,
+  handleUpdateFavorites,
+  handleUpdate,
+}) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [updateError, setUpdateError] = useState(null);
   const [updateSuccess, setUpdateSuccess] = useState(null);
-  const [movieTitle, setMovieTitle] = useState("");
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const navigate = useNavigate();
 
@@ -70,12 +75,19 @@ const ProfileView = ({ movies, onUpdatedUserInfo, onDeregister }) => {
     }
   };
 
-  const handleChange = (event) => {
+  /*const handleChange = (event) => {
     const { name, value } = event.target;
     setUser({
       ...user,
       [name]: value,
     });
+  };*/
+
+  const handleUpdateFavorites = (movieId) => {
+    const updatedFavorites = favoriteMovies.filter(
+      (movie) => movie._id !== movieId
+    );
+    setFavoriteMovies(updatedFavorites);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -94,10 +106,9 @@ const ProfileView = ({ movies, onUpdatedUserInfo, onDeregister }) => {
         <Col xs={12} sm={8}>
           <Card>
             <Card.Body>
-              <UpdateUser
+              <ProfileUpdate
                 user={user}
-                handleChange={handleChange}
-                handleSubmit={handleUpdate}
+                onUpdatedUserInfo={onUpdatedUserInfo}
               />
             </Card.Body>
           </Card>
@@ -116,7 +127,12 @@ const ProfileView = ({ movies, onUpdatedUserInfo, onDeregister }) => {
           </Card>
         </Col>
       </Row>
-      <FavoriteMovies favoriteMovie={favoriteMovies} />
+      <FavoriteMovies
+        favoriteMovie={favoriteMovies}
+        user={user}
+        token={localStorage.getItem("token")}
+        onUpdateFavorites={handleUpdateFavorites}
+      />
     </Container>
   );
 };
