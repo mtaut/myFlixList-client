@@ -13,7 +13,6 @@ export const ProfileView = ({
   movies,
   onUpdatedUserInfo,
   onDeregister,
-  handleRemoveFav,
 }) => {
   const [username, setUsername] = useState(user.Username);
   const [loading, setLoading] = useState(true);
