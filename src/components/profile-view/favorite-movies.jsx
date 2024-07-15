@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Col, Row, Figure, Button, Card } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { Col, Row, Button, Card } from "react-bootstrap";
 import axios from "axios";
 import "./profile-view.scss";
 
 export const FavoriteMovies = ({
-  favoriteMovies,
+  favoriteMovies = [],
   user,
   token,
   onUpdateFavorites,
@@ -24,35 +24,37 @@ export const FavoriteMovies = ({
     }
   };
 
+  if (!favoriteMovies || favoriteMovies.length === 0) {
+    return <div>No favorite movies to display</div>;
+  }
+
   return (
-    <Card>
-      <Card.Body>
-        <Row>
-          <Col xs={12}>
-            <h4>Favorite Movies</h4>
+    <>
+      <Row xs={1} sm={2} md={3} lg={4} xl={8} className="g-4">
+        {favoriteMovies.map((movie) => (
+          <Col key={movie._id}>
+            <Card className="favorite-movies-card">
+              <Card.Img variant="top" src={movie.ImagePath} />
+              <Card.Body>
+                <Card.Title>{movie.Title}</Card.Title>
+                <Button
+                  variant="secondary"
+                  onClick={() => handleRemoveFav(movie._id)}
+                >
+                  Remove
+                </Button>
+              </Card.Body>
+            </Card>
           </Col>
-        </Row>
-        <Row>
-          {favoriteMovies.map((movie) => (
-            <Col xs={12} md={6} lg={3} key={movie._id} className="fav-movie">
-              <Figure>
-                <Link to={`/movies/${movie._id}`}>
-                  <Figure.Image src={movie.ImagePath} alt={movie.Title} />
-                  <Figure.Caption>{movie.Title}</Figure.Caption>
-                </Link>
-              </Figure>
-              <Button
-                variant="secondary"
-                onClick={() => handleRemoveFav(movie._id)}
-              >
-                Remove
-              </Button>
-            </Col>
-          ))}
-        </Row>
-      </Card.Body>
-    </Card>
+        ))}
+      </Row>
+    </>
   );
 };
 
-export default FavoriteMovies;
+FavoriteMovies.propTypes = {
+  favoriteMovies: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  onUpdateFavorites: PropTypes.func.isRequired,
+};
