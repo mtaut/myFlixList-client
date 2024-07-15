@@ -8,18 +8,17 @@ import { ProfileUpdate } from "./profile-update";
 import "./profile-view.scss";
 
 export const ProfileView = ({
+  user,
+  token,
   movies,
   onUpdatedUserInfo,
   onDeregister,
-  handleUpdateFavorites,
-  handleUpdate,
+  handleRemoveFav,
 }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [updateError, setUpdateError] = useState(null);
-  const [updateSuccess, setUpdateSuccess] = useState(null);
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [username, setUsername] = useState(user.Username);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(user.Email);
+  const [birthday, setBirthday] = useState(user.Birthday);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,53 +40,35 @@ export const ProfileView = ({
     fetchUserData();
   }, []);
 
-  const handleUpdate = async (event) => {
-    event.preventDefault();
+  const handleUpdate = async (e) => {
+    e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.put(
         `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
-        user,
         {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+          Username: username,
+          Password: password,
+          Email: email,
+          Birthday: birthday,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-      setUpdateSuccess(true);
       onUpdatedUserInfo(response.data);
     } catch (err) {
-      setUpdateError(err);
+      console.error("Error updating user:", error);
     }
   };
 
   const handleDeregister = async () => {
     try {
-      const token = localStorage.getItem("token");
       await axios.delete(
         `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       onDeregister();
-      navigate("/login");
-    } catch (err) {
-      setError(err);
+    } catch (error) {
+      console.error("Error deregistering user:", error);
     }
-  };
-
-  /*const handleChange = (event) => {
-    const { name, value } = event.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };*/
-
-  const handleUpdateFavorites = (movieId) => {
-    const updatedFavorites = favoriteMovies.filter(
-      (movie) => movie._id !== movieId
-    );
-    setFavoriteMovies(updatedFavorites);
   };
 
   if (loading) return <div>Loading...</div>;
