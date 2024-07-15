@@ -7,7 +7,6 @@ import { ProfileView } from "../profile-view/profile-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { Container, Row, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import FavoriteMovies from "../profile-view/favorite-movies";
 import axios from "axios";
 
 export const MainView = () => {
