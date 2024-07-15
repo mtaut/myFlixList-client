@@ -8,7 +8,7 @@ import { ProfileUpdate } from "./profile-update";
 import "./profile-view.scss";
 
 export const ProfileView = ({
-  user,
+  username,
   token,
   movies,
   onUpdatedUserInfo,
