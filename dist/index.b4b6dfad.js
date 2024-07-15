@@ -47778,7 +47778,7 @@ var _favoriteMovies = require("./favorite-movies");
 var _profileUpdate = require("./profile-update");
 var _profileViewScss = require("./profile-view.scss");
 var _s = $RefreshSig$();
-const ProfileView = ({ user, token, movies, onUpdatedUserInfo, onDeregister })=>{
+const ProfileView = ({ username, token, movies, onUpdatedUserInfo, onDeregister })=>{
     _s();
     const [username, setUsername] = (0, _react.useState)(user.Username);
     const [loading, setLoading] = (0, _react.useState)(true);
