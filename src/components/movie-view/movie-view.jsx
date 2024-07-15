@@ -9,12 +9,15 @@ import axios from "axios";
 export const MovieView = ({ movies, user, token, onUpdateFavorites }) => {
   const { movieId } = useParams();
   const movie = movies.find((m) => m._id === movieId);
+  const [isFavorite, setIsfavorite] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user.FavoriteMovies.includes(movieId)) {
       setIsfavorite(true);
     }
-  }, [movieId, user.Favorite.Movies]);
+    setLoading(false);
+  }, [movieId, user.FavoriteMovies]);
 
   const handleAddToFavorites = async () => {
     try {
@@ -77,6 +80,11 @@ export const MovieView = ({ movies, user, token, onUpdateFavorites }) => {
               <Link to={"/"}>
                 <Button className="back-button">Back</Button>
               </Link>
+              {!isFavorite && (
+                <Button onClick={handleAddToFavorites} className="ml-2">
+                  Add to favorites
+                </Button>
+              )}
             </Col>
           </Row>
         </Col>
@@ -86,18 +94,8 @@ export const MovieView = ({ movies, user, token, onUpdateFavorites }) => {
 };
 
 MovieView.propTypes = {
-  movies: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      Title: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired,
-      Genre: PropTypes.shape({
-        Name: PropTypes.string.isRequired,
-      }).isRequired,
-      Director: PropTypes.shape({
-        Name: PropTypes.string.isRequired,
-      }).isRequired,
-      imagePath: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  movies: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  onUpdateFavorites: PropTypes.func.isRequired,
 };
