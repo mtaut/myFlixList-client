@@ -1,7 +1,9 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
+  console.log("User:", user);
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -30,7 +32,10 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                   Profile
                 </Nav.Link>
                 <Nav.Link onClick={onLoggedOut}>
-                  <Button type="button" class="btn btn-danger">
+                  <Button
+                    type="button"
+                    class="btn btn-group-sm btn-outline-danger"
+                  >
                     Logout
                   </Button>
                 </Nav.Link>
