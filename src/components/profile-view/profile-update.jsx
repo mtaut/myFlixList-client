@@ -1,17 +1,51 @@
 import React from "react";
+import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 
-function UpdateUser({ user, handleChange, handleSubmit }) {
+export function ProfileUpdate({ user, onUpdatedUserInfo }) {
+  const [formData, setFormData] = useState({
+    Username: user.username,
+    Password: "",
+    Email: user.Email,
+    Birthday: user.Birthday,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    axios
+      .put(
+        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((response) => {
+        onUpdatedUserInfo(response.data);
+        alert("Profile updated successfully");
+      })
+      .catch((error) => {
+        console.error("There was an error updating your profile", error);
+      });
+  };
+
   return (
     <>
       <h4>Update Your Profile</h4>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formUsername">
           <Form.Label>Username:</Form.Label>
           <Form.Control
             type="text"
             name="Username"
-            value={user.Username}
+            value={formData.Username}
             onChange={handleChange}
             required
             placeholder="Enter a new username"
@@ -23,7 +57,7 @@ function UpdateUser({ user, handleChange, handleSubmit }) {
           <Form.Control
             type="password"
             name="Password"
-            value={user.Password || ""}
+            value={formData.Password}
             onChange={handleChange}
             required
             minLength="8"
@@ -36,7 +70,7 @@ function UpdateUser({ user, handleChange, handleSubmit }) {
           <Form.Control
             type="email"
             name="Email"
-            value={user.Email}
+            value={formData.Email}
             onChange={handleChange}
             required
             placeholder="Enter your email address"
@@ -47,7 +81,7 @@ function UpdateUser({ user, handleChange, handleSubmit }) {
           <Form.Control
             type="date"
             name="Birthday"
-            value={user.Birthday}
+            value={formData.Birthday}
             onChange={handleChange}
             required
           />
@@ -60,4 +94,4 @@ function UpdateUser({ user, handleChange, handleSubmit }) {
   );
 }
 
-export default UpdateUser;
+export default ProfileUpdate;
