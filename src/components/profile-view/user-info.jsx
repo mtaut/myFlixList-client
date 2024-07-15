@@ -1,6 +1,6 @@
 import React from "react";
 
-function UserInfo({ email, name }) {
+export const UserInfo = ({ email, name }) => {
   return (
     <>
       <h4>Your Info</h4>
@@ -8,6 +8,6 @@ function UserInfo({ email, name }) {
       <p>Email: {email}</p>
     </>
   );
-}
+};
 
 export default UserInfo;
