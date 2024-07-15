@@ -16,63 +16,58 @@ export const ProfileView = ({
   handleRemoveFav,
 }) => {
   const [username, setUsername] = useState(user.Username);
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState(user.Email);
-  const [birthday, setBirthday] = useState(user.Birthday);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isDeregistering, setIsDeregistering] = useState(user.Birthday);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const username = localStorage.getItem("user");
         const response = await axios.get(
-          `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`
+          `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
-        setUser(response.data);
-        setFavoriteMovies(response.data.favoriteMovies || []);
-      } catch (err) {
-        setError(err);
+        setUsername(response.data);
+      } catch (error) {
+        setError(error.message);
       } finally {
         setLoading(false);
       }
     };
 
     fetchUserData();
-  }, []);
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(
-        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
-        {
-          Username: username,
-          Password: password,
-          Email: email,
-          Birthday: birthday,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      onUpdatedUserInfo(response.data);
-    } catch (err) {
-      console.error("Error updating user:", error);
-    }
-  };
+  }, [username, token]);
 
   const handleDeregister = async () => {
-    try {
-      await axios.delete(
-        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      onDeregister();
-    } catch (error) {
-      console.error("Error deregistering user:", error);
+    if (alert.confirm("Do you want to deregister and delete your profile?")) {
+      isDeregistering(true);
+      try {
+        const response = await axios.delete(
+          `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        if (response.status === 200) {
+          alert("You have deleted your profile");
+          onDeregister();
+          navigate("/login");
+        } else {
+          alert("Did not degregister profile:", response.error);
+          setIsDeregistering(false);
+        }
+      } catch (error) {
+        console.error("Error deregistering user:", error);
+      }
     }
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading user data</div>;
+
+  const favoriteMovies = movies.filter((m) =>
+    user.FavoriteMovies.includes(m._id)
+  );
 
   return (
     <Container>
@@ -111,8 +106,8 @@ export const ProfileView = ({
       <FavoriteMovies
         favoriteMovie={favoriteMovies}
         user={user}
-        token={localStorage.getItem("token")}
-        onUpdateFavorites={handleUpdateFavorites}
+        token={token}
+        onUpdateFavorites={movieId}
       />
     </Container>
   );
