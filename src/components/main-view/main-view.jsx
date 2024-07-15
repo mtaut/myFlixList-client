@@ -132,7 +132,12 @@ export const MainView = () => {
                       <Col>One moment please...</Col>
                     ) : (
                       <Col md={8}>
-                        <MovieView movies={movies} />
+                        <MovieView
+                          movies={movies}
+                          user={user}
+                          token={token}
+                          onUpdateFavorites={addFavorite}
+                        />
                       </Col>
                     )}
                   </>
@@ -151,7 +156,8 @@ export const MainView = () => {
                           movies={movies}
                           onUpdatedUserInfo={handleUpdatedUserInfo}
                           onDeregister={handleDeregister}
-                          handleUpdateFavorites={handleUpdateFavorites}
+                          addFavorite={addFavorite}
+                          handleRemoveFav={handleRemoveFav}
                         />
                       </Col>
                     )}
