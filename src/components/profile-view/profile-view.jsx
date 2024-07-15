@@ -22,6 +22,7 @@ export const ProfileView = ({
 
   useEffect(() => {
     const fetchUserData = async () => {
+      const token = localStorage.getItem("token");
       try {
         const response = await axios.get(
           `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`,
