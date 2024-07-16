@@ -3,7 +3,7 @@ import React from "react";
 export const UserInfo = ({ email, name }) => {
   return (
     <>
-      <h4>Your Info</h4>
+      <h4>{user.Username}'s Profile</h4>
       <p>Name: {name}</p>
       <p>Email: {email}</p>
     </>
