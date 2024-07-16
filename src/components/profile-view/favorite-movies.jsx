@@ -1,16 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Col, Row, Button, Card } from "react-bootstrap";
+import { Col, Row, Button, Card, Container } from "react-bootstrap";
 import axios from "axios";
 import "./profile-view.scss";
 
 export const FavoriteMovies = ({
-  favoriteMovies = [],
+  favoriteMovies,
   user,
   token,
   onUpdateFavorites,
 }) => {
-  const handleRemoveFav = async (movieId) => {
+  const handleRemoveFavorite = async (movieId) => {
     try {
       await axios.delete(
         `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
@@ -29,7 +29,8 @@ export const FavoriteMovies = ({
   }
 
   return (
-    <>
+    <Container>
+      <h4>Favorite Movies</h4>
       <Row xs={1} sm={2} md={3} lg={4} xl={8} className="g-4">
         {favoriteMovies.map((movie) => (
           <Col key={movie._id}>
@@ -39,7 +40,7 @@ export const FavoriteMovies = ({
                 <Card.Title>{movie.Title}</Card.Title>
                 <Button
                   variant="secondary"
-                  onClick={() => handleRemoveFav(movie._id)}
+                  onClick={() => handleRemoveFavorite(movie._id)}
                 >
                   Remove
                 </Button>
@@ -48,7 +49,7 @@ export const FavoriteMovies = ({
           </Col>
         ))}
       </Row>
-    </>
+    </Container>
   );
 };
 
