@@ -1,35 +1,39 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Button, Row, Col, Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { UserInfo } from "./user-info";
 import { FavoriteMovies } from "./favorite-movies";
 import { ProfileUpdate } from "./profile-update";
+import { DeleteProfile } from "./profile-delete";
+import { useNavigate } from "react-router-dom";
 import "./profile-view.scss";
 
 export const ProfileView = ({
-  user,
+  username,
   token,
   movies,
   onUpdatedUserInfo,
-  onDeregister,
   handleUpdateFavorites,
 }) => {
-  const [username, setUsername] = useState(user.Username);
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isDeregistering, setIsDeregistering] = useState(user.Birthday);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!token) {
+      return;
+    }
     const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
       try {
         const response = await axios.get(
           `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
-        setUsername(response.data);
+        setUser(response.data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -40,39 +44,26 @@ export const ProfileView = ({
     fetchUserData();
   }, [username, token]);
 
-  const handleDeregister = async () => {
-    if (alert.confirm("Do you want to deregister and delete your profile?")) {
-      isDeregistering(true);
-      try {
-        const response = await axios.delete(
-          `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+  const handleUpdate = (updatedUser) => {
+    setUser(updatedUser);
+    onUpdatedUserInfo(updatedUser);
+  };
 
-        if (response.status === 200) {
-          alert("You have deleted your profile");
-          onDeregister();
-          navigate("/login");
-        } else {
-          alert("Did not degregister profile:", response.error);
-          setIsDeregistering(false);
-        }
-      } catch (error) {
-        console.error("Error deregistering user:", error);
-      }
-    }
+  const handleProfileDeleted = () => {
+    onDelete();
+    navigate("/login");
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading user data</div>;
 
-  const favoriteMovies = movies.filter((m) =>
-    user.FavoriteMovies.includes(m._id)
-  );
+  const favoriteMovies = user.FavoriteMovies
+    ? movies.filter((m) => user.FavoriteMovies.includes(m._id))
+    : [];
 
   return (
     <Container>
-      <Row>
+      <Row className="justify-content-center">
         <Col xs={12} sm={4}>
           <Card>
             <Card.Body>
@@ -84,34 +75,37 @@ export const ProfileView = ({
           <Card>
             <Card.Body>
               <ProfileUpdate
+                username={username}
+                token={token}
                 user={user}
-                onUpdatedUserInfo={onUpdatedUserInfo}
+                onProfileUpdate={handleUpdate}
               />
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xs={12} sm={4}>
-          <Card>
-            <Card.Body>
-              <Button
-                type="button"
-                class="btn btn-warning"
-                onClick={handleDeregister}
-              >
-                Deregister
-              </Button>
+              <DeleteProfile
+                user={user}
+                token={token}
+                onProfileDeleted={handleProfileDeleted}
+              />
             </Card.Body>
           </Card>
         </Col>
       </Row>
       <FavoriteMovies
-        favoriteMovie={favoriteMovies}
+        favoriteMovies={favoriteMovies}
         user={user}
         token={token}
         onUpdateFavorites={handleUpdateFavorites}
       />
     </Container>
   );
+};
+
+ProfileView.propTypes = {
+  username: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  movies: PropTypes.array.isRequired,
+  onUpdatedUserInfo: PropTypes.func.isRequired,
+  onDeregister: PropTypes.func.isRequired,
+  handleUpdateFavorites: PropTypes.func.isRequired,
 };
 
 export default ProfileView;
