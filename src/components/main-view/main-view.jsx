@@ -37,18 +37,6 @@ export const MainView = () => {
     localStorage.removeItem("token");
   };
 
-  const handleUpdatedUserInfo = (updatedUser) => {
-    setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-  };
-
-  const handleDeregister = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-  };
-
   const addFavorite = async (movieId) => {
     if (!user) return;
 
@@ -62,21 +50,6 @@ export const MainView = () => {
       localStorage.setItem("user", JSON.stringify(response.data));
     } catch (error) {
       console.error("Error adding favorite:", error);
-    }
-  };
-
-  const handleRemoveFav = async (movieId) => {
-    if (!user) return;
-
-    try {
-      const response = await axios.delete(
-        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setUser(response.data);
-      localStorage.setItem("user", JSON.stringify(response.data));
-    } catch (error) {
-      console.error("Error removing favorite:", error);
     }
   };
 
@@ -151,14 +124,7 @@ export const MainView = () => {
                       <Navigate to="/login" replace />
                     ) : (
                       <Col md={8}>
-                        <ProfileView
-                          user={user}
-                          movies={movies}
-                          onUpdatedUserInfo={handleUpdatedUserInfo}
-                          onDeregister={handleDeregister}
-                          addFavorite={addFavorite}
-                          handleRemoveFav={handleRemoveFav}
-                        />
+                        <ProfileView token={token} movies={movies} />
                       </Col>
                     )}
                   </>
