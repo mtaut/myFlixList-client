@@ -21,11 +21,19 @@ export const MovieView = ({ movies, user, token, onUpdateFavorites }) => {
 
   const handleAddToFavorites = async () => {
     try {
-      await axios.post(
-        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      if (isFavorite) {
+        await axios.post(
+          `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      } else {
+        await axios.post(
+          `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      }
       onUpdateFavorites(movieId);
     } catch (error) {
       console.error("Error adding favorite:", error);
