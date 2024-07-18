@@ -32,10 +32,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                   Profile
                 </Nav.Link>
                 <Nav.Link onClick={onLoggedOut}>
-                  <Button
-                    type="button"
-                    class="btn btn-group-sm btn-outline-danger"
-                  >
+                  <Button type="button" className="btn btn-group-sm">
                     Logout
                   </Button>
                 </Nav.Link>
