@@ -41,6 +41,7 @@ export const FavoriteMovies = ({
                 <Button
                   variant="secondary"
                   onClick={() => handleRemoveFavorite(movie._id)}
+                  className="w-100"
                 >
                   Remove
                 </Button>
