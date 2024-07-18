@@ -1,20 +1,34 @@
 import React, { useState, useEffect } from "react";
+import {
+  Form,
+  Button,
+  Alert,
+  Spinner,
+  Container,
+  Col,
+  Row,
+} from "react-bootstrap";
 import axios from "axios";
-import { Form, Button, Alert } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-export const ProfileUpdate = ({ user, onUpdatedUserInfo }) => {
-  const [formData, setFormData] = useState({
-    Username: user.username,
+export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
+  const intialFormData = {
+    Username: username || "",
     Password: "",
     ConfirmPassword: "",
-    Email: user.Email,
-    Birthday: user.Birthday,
-  });
+    Email: user.Email || "",
+    Birthday: user.Birthday || "",
+  };
+
+  const [formData, setFormData] = useState(intialFormData);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const [passwordError, setPasswordError] = useState(null);
 
   useEffect(() => {
     setFormData({
-      Username: user.Username || "",
+      Username: username || "",
       Password: "",
       ConfirmPassword: "",
       Email: user.Email || "",
@@ -22,16 +36,22 @@ export const ProfileUpdate = ({ user, onUpdatedUserInfo }) => {
     });
   }, [user]);
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    (setFormData) => (prevFormData) => ({
-      ...prevFormData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
 
-    if (name === "Password" || name === "ConfirmPassword") {
+    if (name === "password" || name === "ConfirmPassword") {
+      if (value.length > 0 && value.length < 8) {
+        setPasswordError("Password must be at least 8 characters long");
+      } else {
+        setPasswordError(null);
+      }
+
       if (
-        (name === "Password" && value !== formData.ConfirmPassword) ||
+        (name === "password" && value !== formData.ConfirmPassword) ||
         (name === "ConfirmPassword" && value !== formData.Password)
       ) {
         setPasswordError("Passwords do not match");
@@ -44,12 +64,18 @@ export const ProfileUpdate = ({ user, onUpdatedUserInfo }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (passwordError) {
-      alert("Please fix errors before submitting form");
+    if (formData.Password !== formData.ConfirmPassword) {
+      setError("Passwords do not match");
       return;
     }
 
-    const token = localStorage.getItem("token");
+    if (formData.Password.length > 0 && formData.Password.length < 8) {
+      setPasswordError("Password must be at least 8 charaters long");
+      return;
+    }
+
+    setLoading(true);
+    setSuccess(false);
     try {
       const response = await axios.put(
         `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
@@ -59,86 +85,120 @@ export const ProfileUpdate = ({ user, onUpdatedUserInfo }) => {
           Email: formData.Email,
           Birthday: formData.Birthday,
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      onUpdatedUserInfo(response.data);
-      alert("Profile updated successfully");
+      const updatedUser = response.data;
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      onProfileUpdate(updatedUser);
+      setSuccess(true);
+      setMessage("Profile successfully updated");
     } catch (error) {
-      console.error("There was an error updating your profile", error);
-      alert("There was an error updateding your profile");
+      setError(error.message);
+      setSuccess(false);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <>
-      <h4>Update Your Profile</h4>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formUsername">
-          <Form.Label>Username:</Form.Label>
-          <Form.Control
-            type="text"
-            name="Username"
-            value={formData.Username}
-            onChange={handleChange}
-            required
-            placeholder="Enter a new username"
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formPassword">
-          <Form.Label>Password:</Form.Label>
-          <Form.Control
-            type="password"
-            name="Password"
-            value={formData.Password}
-            onChange={handleChange}
-            required
-            minLength="8"
-            placeholder="Your password must be 8 or more characters"
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Confirm Password:</Form.Label>
-          <Form.Control
-            type="password"
-            name="ConfirmPassword"
-            value={formData.ConfirmPassword}
-            onChange={handleChange}
-            required
-            minLength="8"
-            placeholder="Confirm your password"
-          />
-          {passwordError && <Alert variant="danger">{passwordError}</Alert>}
-        </Form.Group>
-
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email address:</Form.Label>
-          <Form.Control
-            type="email"
-            name="Email"
-            value={formData.Email}
-            onChange={handleChange}
-            required
-            placeholder="Enter your email address"
-          />
-        </Form.Group>
-        <Form.Group controlId="formBirthday">
-          <Form.Label>Birthday</Form.Label>
-          <Form.Control
-            type="date"
-            name="Birthday"
-            value={formData.Birthday}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
-    </>
+    <Container>
+      <Row>
+        <Col>
+          <Form onSubmit={handleSubmit}>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && (
+              <Alert variant="success">Profile updated successfully</Alert>
+            )}
+            <Form.Group controlId="formUsername">
+              <Form.Label>Username:</Form.Label>
+              <Form.Control
+                type="text"
+                name="username"
+                value={formData.Username}
+                onChange={handleInputChange}
+                required
+                placeholder="Enter a new username"
+              />
+            </Form.Group>
+            <div className="spacer" style={{ margin: "20px" }}></div>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                value={formData.Password}
+                onChange={handleInputChange}
+                required
+                minLength="8"
+                placeholder="Your password must be 8 or more characters"
+              />
+            </Form.Group>
+            <div className="spacer" style={{ margin: "20px" }}></div>
+            <Form.Group controlId="formConfirmPassword">
+              <Form.Label>Confirm Password:</Form.Label>
+              <Form.Control
+                type="password"
+                name="confirmPassword"
+                value={formData.ConfirmPassword}
+                onChange={handleInputChange}
+                required
+                minLength="8"
+                placeholder="Confirm your password"
+              />
+            </Form.Group>
+            {passwordError && <Alert variant="danger">{passwordError}</Alert>}
+            <div className="spacer" style={{ margin: "20px" }}></div>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email:</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.Email}
+                onChange={handleInputChange}
+                required
+                placeholder="Enter your email address"
+              />
+            </Form.Group>
+            <div className="spacer" style={{ margin: "20px" }}></div>
+            <Form.Group controlId="formBirthday">
+              <Form.Label>Birthday</Form.Label>
+              <Form.Control
+                type="date"
+                name="birthday"
+                value={formData.Birthday}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+            <div className="spacer" style={{ margin: "20px" }}></div>
+            <Button
+              variant="warning"
+              type="submit"
+              className="update-button"
+              disabled={loading}
+            >
+              {loading ? <Spinner animation="border" size="sm" /> : "Submit"}
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
+};
+
+ProfileUpdate.propTypes = {
+  username: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    Username: PropTypes.string,
+    Email: PropTypes.string,
+    Birthday: PropTypes.string,
+  }).isRequired,
+  onProfileUpdate: PropTypes.func.isRequired,
 };
 
 export default ProfileUpdate;
