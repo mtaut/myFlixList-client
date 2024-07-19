@@ -1,20 +1,56 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { Button, Row, Col, Card } from "react-bootstrap";
 
-export const DeleteProfile = (username) => {
-  const [isDeleting, setIsDeleting] = useState(false);
+export const DeleteProfile = ({ onDelete, isDeleting: propIsDeleting }) => {
+  const [message, setMessage] = useState("");
+  const [isDeleting, setIsDeleting] = useState(propIsDeleting);
+  const storedUser = JSON.parse(localStorage.getItem("user")) || {};
+  const storedToken = localStorage.getItem("token") || "";
 
   const handleDelete = async () => {
-    username.onDelete(setIsDeleting);
+    if (!storedToken) {
+      console.log("Token not found");
+      return;
+    }
+    setIsDeleting(true);
+    try {
+      await onDelete(storedUser.Username, storedToken);
+      alert("Profile successfully deleted");
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting profile", error);
+      setMessage("Error deleting profile");
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
-    <div>
-      <Button variant="danger" disabled={isDeleting} onClick={handleDelete}>
-        {isDeleting ? "Deleting..." : "Delete Profile"}
-      </Button>
-    </div>
+    <Row>
+      <Col>
+        <Card className="profile-delete">
+          <h6>{message}</h6>
+          <Button
+            type="button"
+            class="btn btn-danger"
+            variant="danger"
+            onClick={handleDelete}
+            disabled={isDeleting}
+          >
+            {isDeleting ? "Deleting..." : "Delete Profile"}
+          </Button>
+        </Card>
+      </Col>
+    </Row>
   );
+};
+
+DeleteProfile.propTypes = {
+  onDelete: PropTypes.func.isRequired,
+  isDeleting: PropTypes.bool,
 };
 
 export default DeleteProfile;
