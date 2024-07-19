@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import PropTypes from "prop-types";
-import { Container, Row, Col, Card } from "react-bootstrap";
 import { UserInfo } from "./user-info";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { FavoriteMovies } from "./favorite-movies";
 import { ProfileUpdate } from "./profile-update";
 import { DeleteProfile } from "./profile-delete";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import axios from "axios";
 import "./profile-view.scss";
 
-export const ProfileView = ({ token, movies, onLogout }) => {
+export const ProfileView = ({ token, movies }) => {
   const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const setIsLoading = useState(true);
+  const setError = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`,
+          `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -31,7 +30,7 @@ export const ProfileView = ({ token, movies, onLogout }) => {
       } catch (error) {
         setError(error.message);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -46,34 +45,21 @@ export const ProfileView = ({ token, movies, onLogout }) => {
     navigate(`/users/${updatedUser.Username}`, { replace: true });
   };
 
-  const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to deregister?")) {
-      setIsDeleting(true);
-      try {
-        const response = await axios.delete(
-          `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-
-        if (response.status === 200) {
-          alert("Profile successfully deleted");
-          onLogout();
-          navigate("/login");
-        } else {
-          alert("Something went wrong");
-          setIsDeleting(false);
-        }
-      } catch (error) {
-        console.error("There was an error deleting the profile", error);
-        setIsDeleting(false);
+  const onDelete = async (username, token) => {
+    const response = await axios.delete(
+      `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
       }
+    );
+
+    if (response.status !== 200) {
+      throw new Error("Could not delete profile");
     }
   };
 
-  const favoriteMovies = movies.filter((m) =>
-    user.FavoriteMovies ? user.FavoriteMovies.includes(m._id) : false
+  const favoriteMovieList = movies.filter((m) =>
+    user.FavoriteMovieList ? user.FavoriteMovies.includes(m._id) : false
   );
 
   return (
@@ -96,13 +82,15 @@ export const ProfileView = ({ token, movies, onLogout }) => {
                 user={user}
                 onProfileUpdate={handleUpdate}
               />
-              <DeleteProfile onDelete={handleDelete} isDeleting={isDeleting} />
             </Card.Body>
+          </Card>
+          <Card>
+            <DeleteProfile onDelete={onDelete} isDeleting={false} />
           </Card>
         </Col>
       </Row>
       <FavoriteMovies
-        favoriteMovies={favoriteMovies}
+        favoriteMovieList={favoriteMovieList}
         user={user}
         token={token}
         onUpdateFavorites={(movieId) => {
