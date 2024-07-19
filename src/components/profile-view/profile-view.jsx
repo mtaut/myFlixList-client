@@ -82,10 +82,9 @@ export const ProfileView = ({ token, movies }) => {
                 user={user}
                 onProfileUpdate={handleUpdate}
               />
+
+              <DeleteProfile onDelete={onDelete} isDeleting={false} />
             </Card.Body>
-          </Card>
-          <Card>
-            <DeleteProfile onDelete={onDelete} isDeleting={false} />
           </Card>
         </Col>
       </Row>
