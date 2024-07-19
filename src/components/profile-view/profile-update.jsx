@@ -15,7 +15,7 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
   const intialFormData = {
     Username: username || "",
     Password: "",
-    ConfirmPassword: "",
+    confirmPassword: "",
     Email: user.Email || "",
     Birthday: user.Birthday || "",
   };
@@ -51,8 +51,8 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
       }
 
       if (
-        (name === "password" && value !== formData.ConfirmPassword) ||
-        (name === "ConfirmPassword" && value !== formData.Password)
+        (name === "password" && value !== formData.confirmPassword) ||
+        (name === "confirmPassword" && value !== formData.Password)
       ) {
         setPasswordError("Passwords do not match");
       } else {
@@ -64,7 +64,7 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.Password !== formData.ConfirmPassword) {
+    if (formData.Password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
@@ -143,7 +143,7 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
               <Form.Control
                 type="password"
                 name="confirmPassword"
-                value={formData.ConfirmPassword}
+                value={formData.confirmPassword}
                 onChange={handleInputChange}
                 required
                 minLength="8"
