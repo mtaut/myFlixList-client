@@ -5,7 +5,7 @@ import axios from "axios";
 import "./profile-view.scss";
 
 export const FavoriteMovies = ({
-  favoriteMovies,
+  favoriteMovieList,
   user,
   token,
   onUpdateFavorites,
@@ -24,15 +24,15 @@ export const FavoriteMovies = ({
     }
   };
 
-  if (!favoriteMovies || favoriteMovies.length === 0) {
+  /*if (!favoriteMovies || favoriteMovies.length === 0) {
     return <div>No favorite movies to display</div>;
-  }
+  }*/
 
   return (
     <Container>
       <h4>Favorite Movies</h4>
       <Row xs={1} sm={2} md={3} lg={4} xl={8} className="g-4">
-        {favoriteMovies.map((movie) => (
+        {favoriteMovieList.map((movie) => (
           <Col key={movie._id}>
             <Card className="favorite-movies-card">
               <Card.Img variant="top" src={movie.ImagePath} />
