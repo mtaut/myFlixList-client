@@ -31,18 +31,18 @@ export const DeleteProfile = ({ onDelete, isDeleting: propIsDeleting }) => {
   return (
     <Row>
       <Col>
-        <Card className="profile-delete">
+        <div className="profile-delete">
           <h6>{message}</h6>
           <Button
             type="button"
-            class="btn btn-danger"
+            className="btn btn-danger w-auto"
             variant="danger"
             onClick={handleDelete}
             disabled={isDeleting}
           >
             {isDeleting ? "Deleting..." : "Delete Profile"}
           </Button>
-        </Card>
+        </div>
       </Col>
     </Row>
   );
