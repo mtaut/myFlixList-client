@@ -1,104 +1,82 @@
 import React, { useState, useEffect } from "react";
 import {
+  Container,
+  Col,
+  Row,
   Form,
   Button,
   Alert,
   Spinner,
-  Container,
-  Col,
-  Row,
 } from "react-bootstrap";
-import axios from "axios";
 import PropTypes from "prop-types";
 
-export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
-  const intialFormData = {
-    Username: username || "",
-    Password: "",
-    confirmPassword: "",
-    Email: user.Email || "",
-    Birthday: user.Birthday || "",
-  };
-
-  const [formData, setFormData] = useState(intialFormData);
+export const ProfileUpdate = ({ user, onProfileUpdate }) => {
+  const [username, setUsername] = useState(user.Username || "");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState(user.Email || "");
+  const [birthday, setBirthday] = useState(user.Birthday || "");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [passwordError, setPasswordError] = useState(null);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    setFormData({
-      Username: username || "",
-      Password: "",
-      ConfirmPassword: "",
-      Email: user.Email || "",
-      Birthday: user.Birthday || "",
-    });
+    setUsername(user.Username || "");
+    setEmail(user.Email || "");
+    setBirthday(user.Birthday || "");
   }, [user]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    if (name === "password" || name === "ConfirmPassword") {
-      if (value.length > 0 && value.length < 8) {
-        setPasswordError("Password must be at least 8 characters long");
-      } else {
-        setPasswordError(null);
-      }
-
-      if (
-        (name === "password" && value !== formData.confirmPassword) ||
-        (name === "confirmPassword" && value !== formData.Password)
-      ) {
-        setPasswordError("Passwords do not match");
-      } else {
-        setPasswordError(null);
-      }
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (formData.Password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    if (formData.Password.length > 0 && formData.Password.length < 8) {
-      setPasswordError("Password must be at least 8 charaters long");
-      return;
-    }
-
     setLoading(true);
-    setSuccess(false);
+    setError("");
+    setSuccess("");
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.log("Token not found");
+      setLoading(false);
+      return;
+    }
+
+    const data = {
+      Username: username,
+      Password: password,
+      ConfirmPassword: confirmPassword,
+      Email: email,
+      Birthday: birthday,
+    };
+
     try {
-      const response = await axios.put(
+      const response = await fetch(
         `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
         {
-          Username: formData.Username,
-          Password: formData.Password,
-          Email: formData.Email,
-          Birthday: formData.Birthday,
-        },
-        {
+          method: "PUT",
+          body: JSON.stringify(data),
           headers: {
+            "Content-type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      const updatedUser = response.data;
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      onProfileUpdate(updatedUser);
-      setSuccess(true);
-      setMessage("Profile successfully updated");
+
+      if (response.ok) {
+        const updatedUser = response.json();
+        alert("Update successful");
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        onProfileUpdate(updatedUser);
+        setUsername(updatedUser.Username);
+        setPassword("");
+        setConfirmPassword("");
+        setEmail(updatedUser.Email);
+        setBirthday(updatedUser.Birthday);
+        setSuccess("Profile updated successfully");
+      } else {
+        setError("Updated failed");
+      }
     } catch (error) {
-      setError(error.message);
-      setSuccess(false);
+      console.error("Error updating profile", error);
+      setError("Error updating profile");
     } finally {
       setLoading(false);
     }
@@ -109,17 +87,12 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
       <Row>
         <Col>
           <Form onSubmit={handleSubmit}>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {success && (
-              <Alert variant="success">Profile updated successfully</Alert>
-            )}
             <Form.Group controlId="formUsername">
               <Form.Label>Username:</Form.Label>
               <Form.Control
                 type="text"
-                name="username"
-                value={formData.Username}
-                onChange={handleInputChange}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 placeholder="Enter a new username"
               />
@@ -129,12 +102,11 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
               <Form.Label>Password:</Form.Label>
               <Form.Control
                 type="password"
-                name="password"
-                value={formData.Password}
-                onChange={handleInputChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength="8"
-                placeholder="Your password must be 8 or more characters"
+                placeholder="Password must be 8 or more characters"
               />
             </Form.Group>
             <div className="spacer" style={{ margin: "20px" }}></div>
@@ -142,23 +114,20 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
               <Form.Label>Confirm Password:</Form.Label>
               <Form.Control
                 type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength="8"
                 placeholder="Confirm your password"
               />
             </Form.Group>
-            {passwordError && <Alert variant="danger">{passwordError}</Alert>}
             <div className="spacer" style={{ margin: "20px" }}></div>
             <Form.Group controlId="formEmail">
               <Form.Label>Email:</Form.Label>
               <Form.Control
                 type="email"
-                name="email"
-                value={formData.Email}
-                onChange={handleInputChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Enter your email address"
               />
@@ -168,9 +137,8 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
               <Form.Label>Birthday</Form.Label>
               <Form.Control
                 type="date"
-                name="birthday"
-                value={formData.Birthday}
-                onChange={handleInputChange}
+                value={birthday}
+                onChange={(e) => setBirthday(e.target.value)}
                 required
               />
             </Form.Group>
@@ -183,6 +151,10 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
             >
               {loading ? <Spinner animation="border" size="sm" /> : "Submit"}
             </Button>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && (
+              <Alert variant="success">Profile updated successfully</Alert>
+            )}
           </Form>
         </Col>
       </Row>
@@ -191,12 +163,10 @@ export const ProfileUpdate = ({ username, token, user, onProfileUpdate }) => {
 };
 
 ProfileUpdate.propTypes = {
-  username: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
   user: PropTypes.shape({
-    Username: PropTypes.string,
-    Email: PropTypes.string,
-    Birthday: PropTypes.string,
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
   }).isRequired,
   onProfileUpdate: PropTypes.func.isRequired,
 };
