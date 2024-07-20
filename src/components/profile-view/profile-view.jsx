@@ -11,15 +11,15 @@ import "./profile-view.scss";
 
 export const ProfileView = ({ token, movies }) => {
   const [user, setUser] = useState({});
-  const setIsLoading = useState(true);
-  const setError = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}`,
+          `https://myflixlist-7625107afe99.herokuapp.com/users/${username}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -30,16 +30,16 @@ export const ProfileView = ({ token, movies }) => {
       } catch (error) {
         setError(error.message);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
     if (user.Username) {
       fetchUserData();
     }
-  }, [user.Username, token]);
+  }, [token]);
 
-  const handleUpdate = (updatedUser) => {
+  const handleProfileUpdate = (updatedUser) => {
     setUser(updatedUser);
 
     navigate(`/users/${updatedUser.Username}`, { replace: true });
@@ -58,9 +58,12 @@ export const ProfileView = ({ token, movies }) => {
     }
   };
 
-  const favoriteMovieList = movies.filter((m) =>
-    user.FavoriteMovieList ? user.FavoriteMovies.includes(m._id) : false
+  const favoriteMovies = movies.filter((m) =>
+    user.FavoriteMovies?.includes(m._id)
   );
+
+  /*if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;*/
 
   return (
     <Container>
@@ -77,19 +80,16 @@ export const ProfileView = ({ token, movies }) => {
             <h5>Update Your Info</h5>
             <Card.Body>
               <ProfileUpdate
-                username={user.Username}
-                token={token}
                 user={user}
-                onProfileUpdate={handleUpdate}
+                onProfileUpdate={handleProfileUpdate}
               />
-
               <DeleteProfile onDelete={onDelete} isDeleting={false} />
             </Card.Body>
           </Card>
         </Col>
       </Row>
       <FavoriteMovies
-        favoriteMovieList={favoriteMovieList}
+        favoriteMovies={favoriteMovies}
         user={user}
         token={token}
         onUpdateFavorites={(movieId) => {
@@ -108,7 +108,6 @@ export const ProfileView = ({ token, movies }) => {
 ProfileView.propTypes = {
   token: PropTypes.string.isRequired,
   movies: PropTypes.array.isRequired,
-  onLogout: PropTypes.func.isRequired,
 };
 
 export default ProfileView;
