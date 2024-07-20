@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export const MovieCard = ({ movie }) => {
   return (
     <Card>
-      <Card.Img className="h-100" variant="top" src={movie.imagePath} />
+      <Card.Img className="h-100" variant="top" src={movie.ImagePath} />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director.Name}</Card.Text>
@@ -29,6 +29,6 @@ MovieCard.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
     }).isRequired,
-    imagePath: PropTypes.string.isRequired,
-  }).isOptional,
+    ImagePath: PropTypes.string.isRequired,
+  }).isRequired,
 };
