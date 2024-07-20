@@ -6,23 +6,23 @@ import PropTypes from "prop-types";
 import "./movie-view.scss";
 import axios from "axios";
 
-export const MovieView = ({ movies, user, token, onUpdateFavorites }) => {
+export const MovieView = ({ movies, user, token, onFavorite }) => {
   const { movieId } = useParams();
   const movie = movies.find((m) => m._id === movieId);
-  const [isFavorite, setIsfavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user.FavoriteMovies.includes(movieId)) {
-      setIsfavorite(true);
+      setIsFavorite(true);
     }
     setLoading(false);
   }, [movieId, user.FavoriteMovies]);
 
-  const handleAddToFavorites = async () => {
+  const handleFavorite = async () => {
     try {
       if (isFavorite) {
-        await axios.post(
+        await axios.delete(
           `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
@@ -34,7 +34,8 @@ export const MovieView = ({ movies, user, token, onUpdateFavorites }) => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
       }
-      onUpdateFavorites(movieId);
+      onFavorite(movieId, !isFavorite);
+      setIsFavorite(!isFavorite);
     } catch (error) {
       console.error("Error adding favorite:", error);
     }
@@ -88,11 +89,14 @@ export const MovieView = ({ movies, user, token, onUpdateFavorites }) => {
               <Link to={"/"}>
                 <Button className="back-button">Back</Button>
               </Link>
-              {!isFavorite && (
-                <Button onClick={handleAddToFavorites} className="ml-2">
-                  Add to favorites
-                </Button>
-              )}
+
+              <Button
+                onClick={handleFavorite}
+                className="favorite-button"
+                variant={isFavorite ? "danger" : "primary"}
+              >
+                {isFavorite ? "Unfavorite" : "Favorite"}
+              </Button>
             </Col>
           </Row>
         </Col>
