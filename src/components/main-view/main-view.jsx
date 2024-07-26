@@ -46,10 +46,35 @@ export const MainView = () => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      console.log("Add favorite response:", response.data);
       setUser(response.data);
       localStorage.setItem("user", JSON.stringify(response.data));
     } catch (error) {
       console.error("Error adding favorite:", error);
+    }
+  };
+
+  const removeFavorite = async (movieId) => {
+    if (!user) return;
+
+    try {
+      const response = await axios.delete(
+        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
+        { header: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("Remove favorite response:", response.data);
+      setUser(response.data);
+      localStorage.setItem("user", JSON.stringify(response.data));
+    } catch (error) {
+      console.error("Error removing favorite:", error);
+    }
+  };
+
+  const onFavorite = (movieId, isFavorite) => {
+    if (isFavorite) {
+      addFavorite(movieId);
+    } else {
+      removeFavorite(movieId);
     }
   };
 
@@ -109,7 +134,7 @@ export const MainView = () => {
                           movies={movies}
                           user={user}
                           token={token}
-                          onUpdateFavorites={addFavorite}
+                          onFavorite={onFavorite}
                         />
                       </Col>
                     )}
