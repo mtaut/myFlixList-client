@@ -1,61 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Row, Col, Button, Card, Container } from "react-bootstrap";
-import axios from "axios";
+import { Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-export const FavoriteMovies = ({
-  favoriteMovies,
-  user,
-  token,
-  onUpdateFavorites,
-}) => {
-  const handleRemoveFavorite = async (movieId) => {
-    try {
-      await axios.delete(
-        `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      onUpdateFavorites(movieId);
-    } catch (error) {
-      console.error("Error removing favorite:", error);
-    }
-  };
-
-  /*if (!favoriteMovies || favoriteMovies.length === 0) {
-    return <div>No favorite movies to display</div>;
-  }*/
-
+export const FavoriteMovies = ({ favorites }) => {
   return (
-    <Container>
-      <h4>Favorite Movies</h4>
-      <Row xs={1} sm={2} md={3} lg={4} xl={8} className="g-4">
-        {favoriteMovies.map((movie) => (
-          <Col key={movie._id}>
-            <Card className="favorite-movies-card">
-              <Card.Img variant="top" src={movie.ImagePath} />
-              <Card.Body>
-                <Card.Title>{movie.Title}</Card.Title>
-                <Button
-                  variant="secondary"
-                  onClick={() => handleRemoveFavorite(movie._id)}
-                  className="w-100"
-                >
-                  Remove
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <div className="favorite-movies">
+      {favorites.length === 0 ? (
+        <p>No favorite movies</p>
+      ) : (
+        favorites.map((movie) => (
+          <Card key={movie._id} className="mb-3">
+            <Card.Body>
+              <Card.Title>{movie.Title}</Card.Title>
+              <Card.Text>{movie.Director.Name}</Card.Text>
+              <Link to={`/movies/${movie._id}`}>
+                <Button variant="primary">Movie Info</Button>
+              </Link>
+            </Card.Body>
+          </Card>
+        ))
+      )}
+    </div>
   );
 };
 
 FavoriteMovies.propTypes = {
-  favoriteMovies: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
-  onUpdateFavorites: PropTypes.func.isRequired,
+  favorites: PropTypes.array.isRequired,
 };
+
+export default FavoriteMovies;
