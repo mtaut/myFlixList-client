@@ -27600,7 +27600,7 @@ const MovieCard = ({ movie })=>{
                         to: `/movies/${encodeURIComponent(movie._id)}`,
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                             variant: "link",
-                            children: "Movie Info"
+                            children: "Info"
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
                             lineNumber: 23,
@@ -42380,11 +42380,11 @@ const MovieView = ({ movies, user, token, onFavorite })=>{
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                                     onClick: handleFavorite,
                                     className: "favorite-button",
-                                    variant: isFavorite ? "danger" : "primary",
+                                    variant: isFavorite ? "primary" : "primary",
                                     children: isFavorite ? "Unfavorite" : "Favorite"
                                 }, void 0, false, {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 98,
+                                    lineNumber: 97,
                                     columnNumber: 15
                                 }, undefined)
                             ]
