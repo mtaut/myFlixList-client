@@ -65,7 +65,6 @@ export const ProfileUpdate = ({ user, token, onProfileUpdate }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          placeholder="Enter your email address"
         />
       </Form.Group>
       <div className="spacer" style={{ margin: "20px" }}></div>
@@ -79,8 +78,7 @@ export const ProfileUpdate = ({ user, token, onProfileUpdate }) => {
         />
       </Form.Group>
       <div className="spacer" style={{ margin: "20px" }}></div>
-      <Button variant="warning" type="submit" className="update-button">
-        Update Profile
+      <Button type="button" class="btn btn-primary">
         {loading ? <Spinner animation="border" size="sm" /> : "Submit"}
       </Button>
     </Form>
