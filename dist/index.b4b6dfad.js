@@ -27635,8 +27635,7 @@ MovieCard.propTypes = {
         }).isRequired,
         Director: (0, _propTypesDefault.default).shape({
             Name: (0, _propTypesDefault.default).string.isRequired
-        }).isRequired,
-        ImagePath: (0, _propTypesDefault.default).string.isRequired
+        }).isRequired
     }).isRequired
 };
 exports.default = MovieCard;
