@@ -61,13 +61,13 @@ export const ProfileView = ({ movies, token }) => {
     }
   };
 
-  /*if (loading) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
     return <div>Error: {error}</div>;
-  }*/
+  }
 
   const favoriteMovies = movies.filter((movie) =>
     user.FavoriteMovies.includes(movie._id)
