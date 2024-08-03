@@ -38,6 +38,7 @@ MovieCard.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
     }).isRequired,
+    ImagePath: PropTypes.string,
   }).isRequired,
 };
 
