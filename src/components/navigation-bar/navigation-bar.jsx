@@ -1,5 +1,6 @@
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
   console.log("User:", user);

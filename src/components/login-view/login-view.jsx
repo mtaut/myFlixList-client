@@ -8,20 +8,12 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-
-import {
-  Button,
-  Form,
-  Card,
-  CardGroup,
-  Container,
-  Col,
-  Row,
-} from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault(); // This will prevent page from automatically reloading

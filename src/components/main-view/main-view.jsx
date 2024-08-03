@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MovieCard } from "../movie-card/movie-card";
+import { MoviesList } from "../movies-list/movies-list";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
@@ -8,13 +8,17 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { Container, Row, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [movies, setMovies] = useState([]);
+  const movies = useSelector((state) => state.movies.list);
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!token) {
@@ -26,9 +30,9 @@ export const MainView = () => {
     })
       .then((response) => response.json())
       .then((movies) => {
-        setMovies(movies);
+        dispatch(setMovies(movies));
       });
-  }, [token]);
+  }, [token, dispatch]);
 
   const handleLogout = () => {
     setUser(null);
@@ -60,7 +64,7 @@ export const MainView = () => {
     try {
       const response = await axios.delete(
         `https://myflixlist-7625107afe99.herokuapp.com/users/${user.Username}/movies/${movieId}`,
-        { header: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("Remove favorite response:", response.data);
       setUser(response.data);
@@ -159,19 +163,7 @@ export const MainView = () => {
                 path="/"
                 element={
                   <>
-                    {!user ? (
-                      <Navigate to="/login" replace />
-                    ) : movies.length === 0 ? (
-                      <Col>Movie list is loading...</Col>
-                    ) : (
-                      <>
-                        {movies.map((movie) => (
-                          <Col className="mb-4" md={3}>
-                            <MovieCard key={movie._id} movie={movie} />
-                          </Col>
-                        ))}
-                      </>
-                    )}
+                    {!user ? <Navigate to="/login" replace /> : <MoviesList />}
                   </>
                 }
               />
