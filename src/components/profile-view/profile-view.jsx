@@ -89,6 +89,7 @@ export const ProfileView = ({ movies, token }) => {
             <Card.Body>
               <ProfileUpdate
                 user={user}
+                loading={loading}
                 token={token}
                 onProfileUpdate={handleProfileUpdate}
               />
