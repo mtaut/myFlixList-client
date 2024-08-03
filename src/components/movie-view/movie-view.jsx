@@ -5,6 +5,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "./movie-view.scss";
+import { useSelector } from "react-redux";
 
 export const MovieView = ({ movies, user, token, onFavorite }) => {
   const { movieId } = useParams();
