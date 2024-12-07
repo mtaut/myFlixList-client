@@ -1,6 +1,4 @@
-# myFlixList
-
-myFlixList-client is an app built with React, based on the existing server-side code, myFlixList (REST API and database). This app allows users to register an account, view information about movies, and create a list of their favorite movies. The app is a single page with routing and several interface views.
+myFlixList-client is the client-side project for my myFlixList movie app based on the existing servier-side code (REST API and database). myFlixList is an app for movie enthusiasts who enjoy reading information about movies. The app is a single page with routing and several interface views.
 
 ## myFlixList-client
 
